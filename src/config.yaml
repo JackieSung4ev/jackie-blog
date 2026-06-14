@@ -1,5 +1,5 @@
 site:
-  name: Your Name
+  name: JackieSung
   site: 'https://example.com'
   base: '/'
   trailingSlash: false
@@ -9,22 +9,20 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: Your Name
-    template: '%s | Your Name'
-  description: 'Essays, field notes, and working logs on AI, software, and useful ideas.'
+    default: JackieSung
+    template: '%s | JackieSung'
+  description: 'English notes on VPS deals, cloud servers, AI coding tools, and practical vibe coding workflows.'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: Your Name
+    site_name: JackieSung
     images:
       - url: '~/assets/images/default.png'
         width: 1200
         height: 628
     type: website
   twitter:
-    handle: '@yourhandle'
-    site: '@yourhandle'
     cardType: summary_large_image
 
 i18n:

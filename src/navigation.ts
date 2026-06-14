@@ -7,23 +7,28 @@ export const headerData = {
       href: getPermalink('/'),
     },
     {
-      text: 'Writing',
+      text: 'Blog',
       href: getBlogPermalink(),
     },
     {
-      text: 'About',
-      href: getPermalink('/about'),
-    },
-    {
-      text: 'Now',
-      href: getPermalink('/now'),
+      text: 'Server',
+      links: [
+        {
+          text: 'BandwagonHost',
+          href: getPermalink('/bandwagonhost'),
+        },
+        {
+          text: 'ION Krypt Cloud',
+          href: getPermalink('/ion-krypt-cloud'),
+        },
+      ],
     },
     {
       text: 'Contact',
       href: getPermalink('/contact'),
     },
   ],
-  actions: [{ text: 'Start here', href: getPermalink('/about') }],
+  actions: [],
 };
 
 export const footerData = {
@@ -32,25 +37,24 @@ export const footerData = {
       title: 'Explore',
       links: [
         { text: 'Home', href: getPermalink('/') },
-        { text: 'Writing', href: getBlogPermalink() },
-        { text: 'About', href: getPermalink('/about') },
-        { text: 'Now', href: getPermalink('/now') },
+        { text: 'Blog', href: getBlogPermalink() },
+        { text: 'Search', href: getPermalink('/search') },
+        { text: 'BandwagonHost', href: getPermalink('/bandwagonhost') },
+        { text: 'ION Krypt Cloud', href: getPermalink('/ion-krypt-cloud') },
       ],
     },
     {
       title: 'Topics',
       links: [
         { text: 'AI', href: getPermalink('ai', 'tag') },
-        { text: 'Software', href: getPermalink('software', 'tag') },
-        { text: 'Notes', href: getPermalink('notes', 'tag') },
-        { text: 'Projects', href: getPermalink('projects', 'tag') },
+        { text: 'Vibe Coding', href: getPermalink('vibe-coding', 'tag') },
+        { text: 'Codex', href: getPermalink('codex', 'tag') },
+        { text: 'Claude Code', href: getPermalink('claude-code', 'tag') },
       ],
     },
     {
       title: 'Elsewhere',
       links: [
-        { text: 'GitHub', href: 'https://github.com/' },
-        { text: 'X / Twitter', href: 'https://x.com/' },
         { text: 'RSS', href: getAsset('/rss.xml') },
         { text: 'Contact', href: getPermalink('/contact') },
       ],
@@ -61,12 +65,9 @@ export const footerData = {
     { text: 'Privacy Policy', href: getPermalink('/privacy') },
   ],
   socialLinks: [
-    { ariaLabel: 'X', icon: 'tabler:brand-x', href: '#' },
-    { ariaLabel: 'GitHub', icon: 'tabler:brand-github', href: 'https://github.com/' },
-    { ariaLabel: 'LinkedIn', icon: 'tabler:brand-linkedin', href: 'https://www.linkedin.com/' },
     { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
   ],
   footNote: `
-    (c) 2026 Your Name. Built with AstroWind.
+    (c) 2026 JackieSung. Built with Astro.
   `,
 };

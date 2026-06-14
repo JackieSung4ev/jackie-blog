@@ -8,120 +8,118 @@ import Content from '~/components/widgets/Content.astro';
 import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
 
 const metadata = {
-  title: 'Your Name - Notes on AI, code, and useful work',
+  title: 'JackieSung - VPS Deals and AI Coding Notes',
   ignoreTitleTemplate: true,
-  description: 'A personal site and blog for essays, field notes, and working logs about AI, software, and useful ideas.',
+  description:
+    'English notes on VPS providers, BandwagonHost, ION Krypt Cloud, AI coding tools, Codex, Claude Code, and vibe coding workflows.',
 };
 ---
 
 <Layout metadata={metadata}>
   <Hero
     actions={[
-      { variant: 'primary', text: 'Read the writing', href: '/blog', icon: 'tabler:book-2' },
-      { text: 'About me', href: '/about' },
+      { variant: 'primary', text: 'Compare VPS plans', href: '/bandwagonhost', icon: 'tabler:server-2' },
+      { text: 'Read the blog', href: '/blog' },
     ]}
     image={{
-      src: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1800&q=80',
-      alt: 'A writing desk with a notebook, laptop, and coffee.',
+      src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80',
+      alt: 'Rows of server racks in a data center.',
     }}
   >
-    <Fragment slot="title">Your Name</Fragment>
+    <Fragment slot="title">JackieSung</Fragment>
 
     <Fragment slot="subtitle">
-      A personal site for essays, field notes, and small software experiments. The WordPress archive can come later;
-      this version starts with the ideas that still feel useful in the AI era.
+      English notes for comparing VPS deals, keeping affiliate links organized, and writing about the AI coding tools
+      that are changing everyday software work.
     </Fragment>
   </Hero>
 
   <Features
     id="start"
     tagline="Start here"
-    title="A cleaner home for current work"
-    subtitle="The site is shaped around writing first: fewer legacy pages, clearer paths into the blog, and room for projects that are still alive."
+    title="Two practical tracks"
+    subtitle="The site is split between cloud server deal pages and concise writing about AI-assisted development."
     columns={3}
     items={[
       {
-        title: 'Essays',
-        description: 'Longer thinking about AI, software, tools, and the habits that make work easier to repeat.',
-        icon: 'tabler:notes',
+        title: 'BandwagonHost catalog',
+        description: 'A structured VPS catalog grouped by product tier, specs, price, bandwidth, and data center options.',
+        icon: 'tabler:server-2',
       },
       {
-        title: 'Field notes',
-        description: 'Short observations from experiments, migrations, product decisions, and daily technical practice.',
-        icon: 'tabler:route',
+        title: 'ION Krypt Cloud plans',
+        description: 'A clean English summary of ION VPS Cloud plans across USA and Singapore locations.',
+        icon: 'tabler:cloud-computing',
       },
       {
-        title: 'Projects',
-        description: 'A place to document small tools, site changes, and public experiments without turning them into a portfolio maze.',
-        icon: 'tabler:tool',
+        title: 'AI coding notes',
+        description: 'Short essays on Codex, Claude Code, GPT, and the habits that make vibe coding useful instead of messy.',
+        icon: 'tabler:sparkles',
       },
     ]}
   />
 
   <Content
-    id="archive"
+    id="server"
     isReversed
     items={[
       {
-        title: 'Keep the durable pieces',
-        description: 'Migrate posts that still answer real questions or show a useful process.',
+        title: 'Compare by location',
+        description: 'Server pages make it easier to scan USA, Asia, and China-optimized routes without digging through order forms.',
       },
       {
-        title: 'Rewrite the rest as notes',
-        description: 'Old tutorials can become compact changelogs, resource pages, or private reference material.',
+        title: 'Keep purchase links consistent',
+        description: 'Outbound plan links use the configured affiliate URLs so the site stays simple and monetizable.',
       },
       {
-        title: 'Publish slower and clearer',
-        description: 'The new structure favors evergreen writing over a large archive that no longer represents your work.',
+        title: 'Write the operating notes',
+        description: 'The blog explains the tools and workflows behind the site instead of turning every page into marketing copy.',
       },
     ]}
     image={{
       src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
-      alt: 'A laptop showing a simple writing workflow.',
+      alt: 'A laptop showing a technical writing workflow.',
     }}
   >
     <Fragment slot="content">
-      <h2 class="text-2xl font-bold tracking-normal dark:text-white sm:text-3xl mb-3">
-        From archive to working library
+      <h2 class="mb-3 text-2xl font-bold tracking-normal dark:text-white sm:text-3xl">
+        A small site for useful comparisons
       </h2>
       <p>
-        The goal is not to move every WordPress post. The goal is to create a smaller, more trusted library: essays that
-        hold up, notes that show current thinking, and project pages that make your work easier to understand.
+        JackieSung is built to keep VPS plan information readable and to publish direct, practical notes about AI
+        coding. The design stays lightweight so the content, prices, specs, and links remain easy to update.
       </p>
     </Fragment>
 
     <Fragment slot="bg">
-      <div class="absolute inset-0 bg-green-50/70 dark:bg-transparent"></div>
+      <div class="absolute inset-0 bg-rose-50/70 dark:bg-transparent"></div>
     </Fragment>
   </Content>
 
   <BlogLatestPosts
     id="writing"
     title="Latest writing"
-    linkText="Browse the archive"
+    linkText="Browse the blog"
     count={3}
-    information="Starter posts are included so the blog, RSS feed, categories, tags, and post layouts all have real content to render."
+    information="Three starter posts are included for AI coding, Codex, Claude Code, and practical GPT workflows."
   />
 
   <Features2
-    title="Next passes"
-    subtitle="The skeleton is intentionally simple. Once your name, domain, and selected old posts are known, these slots can become the permanent site map."
-    columns={3}
+    title="Server quick links"
+    subtitle="Jump straight into the two provider pages currently tracked on this site."
+    columns={2}
     items={[
       {
-        title: 'Identity',
-        description: 'Replace the placeholder name, monogram, domain, email, and social URLs.',
-        icon: 'tabler:id',
+        title: 'BandwagonHost',
+        description: 'Browse BandwagonHost VPS plans by tier and order through affiliate links.',
+        icon: 'tabler:server',
+        callToAction: { text: 'Open catalog', href: '/bandwagonhost' },
       },
       {
-        title: 'Selected archive',
-        description: 'Import only the WordPress posts worth preserving, then tag them by current usefulness.',
-        icon: 'tabler:archive',
-      },
-      {
-        title: 'Public projects',
-        description: 'Add a projects page when there are two or three pieces worth showing together.',
-        icon: 'tabler:folders',
+        title: 'ION Krypt Cloud',
+        description: 'Review ION VPS Cloud monthly plans for Dallas, Honolulu, Los Angeles, Silicon Valley, and Singapore.',
+        icon: 'tabler:cloud',
+        callToAction: { text: 'Open ION plans', href: '/ion-krypt-cloud' },
       },
     ]}
   />

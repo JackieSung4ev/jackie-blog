@@ -1,0 +1,272 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '~/layouts/PageLayout.astro';
+import { affiliateUrl, getProductTiers, productCount } from '~/utils/bwh-products';
+
+const tiers = getProductTiers();
+const products = tiers.flatMap((tier) => tier.products);
+const locationCount = new Set(products.flatMap((product) => product.locations.map((location) => location.id))).size;
+const countryCount = new Set(products.flatMap((product) => product.locations.map((location) => location.country))).size;
+
+const tierIcons: Record<string, string> = {
+  basic: 'tabler:server-2',
+  ecommerce: 'tabler:shopping-cart',
+  'ecommerce-sla-elevated': 'tabler:shield-check',
+  ultra: 'tabler:bolt',
+};
+
+const tierAccents: Record<string, string> = {
+  basic: 'from-[#C3073F] to-rose-500',
+  ecommerce: 'from-slate-900 to-[#C3073F]',
+  'ecommerce-sla-elevated': 'from-amber-500 to-[#C3073F]',
+  ultra: 'from-violet-700 to-[#C3073F]',
+};
+
+const metadata = {
+  title: 'BandwagonHost VPS Plans',
+  description:
+    'An English BandwagonHost VPS catalog grouped by product tier, specs, price, bandwidth, and available locations.',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-slate-50/80 dark:bg-slate-950">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
+      <header class="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <div class="grid lg:grid-cols-[1.25fr_0.75fr]">
+          <div class="p-6 sm:p-8 lg:p-10">
+            <p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+              <Icon name="tabler:server-2" class="h-4 w-4" />
+              BandwagonHost VPS
+            </p>
+            <h1 class="mt-4 text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">
+              BandwagonHost VPS Plans
+            </h1>
+            <p class="mt-5 max-w-2xl text-base leading-7 text-muted md:text-lg">
+              A practical VPS catalog for quickly comparing BandwagonHost product tiers, core specs, billing cycles,
+              bandwidth, and available data center locations before ordering.
+            </p>
+
+            <dl class="mt-7 grid gap-3 sm:grid-cols-3">
+              <div class="rounded-md bg-rose-50 p-4 dark:bg-rose-950/30">
+                <dt class="flex items-center gap-2 text-sm text-primary dark:text-rose-100">
+                  <Icon name="tabler:packages" class="h-4 w-4" />
+                  Plans
+                </dt>
+                <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{productCount}</dd>
+              </div>
+              <div class="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
+                <dt class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
+                  <Icon name="tabler:category" class="h-4 w-4" />
+                  Tiers
+                </dt>
+                <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{tiers.length}</dd>
+              </div>
+              <div class="rounded-md bg-amber-50 p-4 dark:bg-amber-950/30">
+                <dt class="flex items-center gap-2 text-sm text-amber-800 dark:text-amber-100">
+                  <Icon name="tabler:world" class="h-4 w-4" />
+                  Locations / Countries
+                </dt>
+                <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">
+                  {locationCount} / {countryCount}
+                </dd>
+              </div>
+            </dl>
+
+            <div class="mt-7 flex flex-wrap gap-3">
+              <a class="btn-primary rounded-md px-5 py-3 text-sm" href={affiliateUrl()} target="_blank" rel="noopener noreferrer">
+                Buy Now
+              </a>
+              <a class="btn-secondary rounded-md px-5 py-3 text-sm" href="#plans">
+                Compare Plans
+              </a>
+            </div>
+          </div>
+
+          <div class="relative min-h-64 bg-rose-50 p-6 text-slate-950 dark:bg-rose-950/30 dark:text-white lg:min-h-full">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.18),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,241,245,0.88))] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.32),transparent_36%),linear-gradient(135deg,rgba(76,5,32,0.65),rgba(15,23,42,0.72))]"></div>
+            <div class="relative flex h-full flex-col justify-end">
+              <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary dark:text-rose-100">Affiliate domain</p>
+              <p class="mt-3 break-all rounded-md border border-rose-200 bg-white/80 p-4 font-mono text-sm text-slate-800 dark:border-rose-900/50 dark:bg-slate-950/40 dark:text-rose-50">
+                bandwagonhost.com/aff.php?aff=13725
+              </p>
+              <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-200">
+                All order links on this page use the BandwagonHost affiliate URL with the product ID appended.
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div id="plans" class="mt-8 lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <div class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center justify-between gap-3">
+              <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                Plan Tiers
+              </h2>
+              <span class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                {productCount}
+              </span>
+            </div>
+
+            <nav class="mt-4 grid gap-2" aria-label="BandwagonHost plan tiers">
+              {
+                tiers.map((tier) => (
+                  <a
+                    class="group flex min-h-12 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-primary hover:bg-rose-50 hover:text-primary focus:outline-none focus:ring-4 focus:ring-rose-100 dark:text-slate-200 dark:hover:bg-rose-950/30 dark:focus:ring-rose-950"
+                    href={`#${tier.id}`}
+                  >
+                    <span class="flex min-w-0 items-center gap-2">
+                      <Icon name={tierIcons[tier.id] || 'tabler:server-2'} class="h-4 w-4 shrink-0 text-primary" />
+                      <span class="truncate">{tier.name}</span>
+                    </span>
+                    <span class="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600 group-hover:bg-white dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-slate-900">
+                      {tier.products.length}
+                    </span>
+                  </a>
+                ))
+              }
+            </nav>
+
+            <div class="mt-5 rounded-md bg-slate-50 p-4 dark:bg-slate-800/70">
+              <p class="flex items-center gap-2 text-sm font-semibold text-slate-950 dark:text-white">
+                <Icon name="tabler:discount-2" class="h-4 w-4 text-primary" />
+                Coupon
+              </p>
+              <p class="mt-2 font-mono text-lg font-bold text-primary">NODESEEK2026</p>
+            </div>
+          </div>
+        </aside>
+
+        <div class="mt-8 grid gap-10 lg:mt-0">
+          {
+            tiers.map((tier) => (
+              <section id={tier.id} class="scroll-mt-24">
+                <div class={`rounded-md bg-gradient-to-r ${tierAccents[tier.id] || 'from-[#C3073F] to-rose-500'} p-px`}>
+                  <div class="rounded-md bg-white p-5 dark:bg-slate-900 sm:p-6">
+                    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                      <div class="flex items-start gap-3">
+                        <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-rose-50 text-primary dark:bg-rose-950/40">
+                          <Icon name={tierIcons[tier.id] || 'tabler:server-2'} class="h-6 w-6" />
+                        </span>
+                        <div>
+                          <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{tier.name}</h2>
+                          <p class="mt-1 text-sm text-muted">{tier.products.length} plans</p>
+                        </div>
+                      </div>
+
+                      <p class="max-w-xl rounded-md border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-muted dark:border-slate-800 dark:bg-slate-950/40">
+                        {tier.desc}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-5 grid gap-4 xl:grid-cols-2">
+                  {tier.products.map((product) => {
+                    const topLocations = product.locations.slice(0, 3);
+                    const extraLocationCount = Math.max(product.locations.length - topLocations.length, 0);
+                    const primaryPrice = product.prices[0];
+
+                    return (
+                      <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+                        <div class="flex items-start justify-between gap-4">
+                          <div class="min-w-0">
+                            <div class="flex flex-wrap items-center gap-2">
+                              <span class="rounded-md bg-rose-50 px-2 py-1 text-xs font-bold text-primary dark:bg-rose-950/40">
+                                PID {product.id}
+                              </span>
+                              {product.outOfStock ? (
+                                <span class="rounded-md bg-red-50 px-2 py-1 text-xs font-semibold text-red-700 dark:bg-red-950 dark:text-red-200">
+                                  Out of stock
+                                </span>
+                              ) : (
+                                <span class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                                  Available
+                                </span>
+                              )}
+                            </div>
+                            <h3 class="mt-3 text-lg font-bold leading-7 text-slate-950 dark:text-white">
+                              {product.name}
+                            </h3>
+                          </div>
+
+                          {primaryPrice && (
+                            <div class="shrink-0 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-right text-primary dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-100">
+                              <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">From</p>
+                              <p class="mt-0.5 text-sm font-bold text-slate-950 dark:text-white">{primaryPrice}</p>
+                            </div>
+                          )}
+                        </div>
+
+                        <dl class="mt-5 grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
+                          {[
+                            ['tabler:cpu', 'CPU', product.cpu],
+                            ['tabler:database', 'RAM', product.ram],
+                            ['tabler:server-cog', 'Storage', product.storage],
+                            ['tabler:arrows-transfer-up', 'Transfer', product.transfer],
+                          ].map(([icon, label, value]) => (
+                            <div class="rounded-md bg-slate-50 p-3 dark:bg-slate-800">
+                              <dt class="flex items-center gap-1.5 text-xs text-muted">
+                                <Icon name={icon} class="h-3.5 w-3.5 text-primary" />
+                                {label}
+                              </dt>
+                              <dd class="mt-1 font-semibold text-slate-950 dark:text-white">{value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+
+                        <div class="mt-4 grid gap-3 text-sm md:grid-cols-[1fr_auto] md:items-end">
+                          <div>
+                            <p class="flex items-center gap-2 font-semibold text-slate-950 dark:text-white">
+                              <Icon name="tabler:map-pin" class="h-4 w-4 text-primary" />
+                              Available locations
+                            </p>
+                            <div class="mt-2 flex flex-wrap gap-2 text-xs text-muted">
+                              {topLocations.map((location) => (
+                                <span class="rounded-md border border-slate-200 px-2 py-1 dark:border-slate-700">
+                                  {location.city}, {location.countryCode}
+                                </span>
+                              ))}
+                              {extraLocationCount > 0 && (
+                                <span class="rounded-md border border-slate-200 px-2 py-1 dark:border-slate-700">
+                                  +{extraLocationCount} more
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <a
+                            class="btn-primary min-h-11 rounded-md px-4 py-2 text-sm"
+                            href={product.affiliateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Buy Now
+                          </a>
+                        </div>
+
+                        <details class="mt-4 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-800 dark:bg-slate-900">
+                          <summary class="cursor-pointer list-none font-semibold text-slate-700 dark:text-slate-200">
+                            Billing cycles and port speed
+                          </summary>
+                          <div class="mt-3 flex flex-wrap gap-2 text-xs text-muted">
+                            <span class="rounded-md bg-slate-100 px-2.5 py-1 dark:bg-slate-800">Port {product.port}</span>
+                            {product.prices.map((price) => (
+                              <span class="rounded-md bg-slate-100 px-2.5 py-1 dark:bg-slate-800">{price}</span>
+                            ))}
+                          </div>
+                        </details>
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

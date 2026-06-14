@@ -7,33 +7,33 @@ import Layout from '~/layouts/PageLayout.astro';
 
 const metadata = {
   title: 'About',
-  description: 'About Your Name and the ideas behind this personal site.',
+  description: 'About JackieSung and the ideas behind this VPS and AI coding site.',
 };
 ---
 
 <Layout metadata={metadata}>
   <HeroText
     tagline="About"
-    title="I write to make useful thinking easier to reuse."
-    subtitle="This is the short version of the personal site: who I am, what I am exploring, and why the archive is being rebuilt instead of copied wholesale."
+    title="Practical notes for server operators."
+    subtitle="This site keeps VPS plan comparisons, affiliate links, and AI coding notes in one lightweight English reference."
     callToAction={{ text: 'Read the blog', href: '/blog', icon: 'tabler:book-2' }}
-    callToAction2={{ text: 'What I am doing now', href: '/now' }}
+    callToAction2={{ text: 'Compare VPS plans', href: '/bandwagonhost' }}
   />
 
   <Content
     isReversed
     items={[
       {
-        title: 'AI and practical work',
-        description: 'How AI changes writing, software, learning, and the small systems that support daily output.',
+        title: 'VPS comparisons',
+        description: 'Readable provider pages for plans, locations, bandwidth, prices, and affiliate order links.',
       },
       {
-        title: 'Software craft',
-        description: 'Notes on building maintainable tools, cleaning up legacy systems, and choosing boring technology well.',
+        title: 'AI coding tools',
+        description: 'Notes on Codex, Claude Code, GPT, and the workflows that make AI coding repeatable.',
       },
       {
-        title: 'Public learning',
-        description: 'Publishing clear fragments before they harden into over-polished essays.',
+        title: 'Practical publishing',
+        description: 'Small, direct pages that can be updated quickly when plans or workflows change.',
       },
     ]}
     image={{
@@ -42,36 +42,36 @@ const metadata = {
     }}
   >
     <Fragment slot="content">
-      <h2 class="text-2xl font-bold tracking-normal dark:text-white sm:text-3xl mb-3">A smaller, sharper site</h2>
+      <h2 class="text-2xl font-bold tracking-normal dark:text-white sm:text-3xl mb-3">A small reference site</h2>
       <p>
-        Replace this paragraph with your real bio. Keep it direct: what you do, what you are known for, what you are
-        currently learning, and what readers can expect from the writing here.
+        JackieSung is built around two useful habits: compare server plans without clutter, and document AI coding
+        workflows while they are still fresh enough to improve.
       </p>
       <p class="mt-4">
-        The tone should feel personal but useful. This is not a marketing homepage; it is a durable home base for
-        writing, contact, and selected work.
+        The tone is plain and practical. Each page should make it easier to pick a provider, check a plan, or improve a
+        coding loop with AI tools.
       </p>
     </Fragment>
   </Content>
 
   <Features
-    title="Writing principles"
-    subtitle="A simple editorial filter for deciding what belongs on the new site."
+    title="Publishing principles"
+    subtitle="A simple filter for deciding what belongs on the site."
     columns={3}
     items={[
       {
         title: 'Current over complete',
-        description: 'The archive should show the thinking you stand behind now, not every post you have ever published.',
+        description: 'Provider pages should be easy to refresh instead of trying to preserve every old snapshot.',
         icon: 'tabler:filter-check',
       },
       {
         title: 'Specific over generic',
-        description: 'Concrete decisions, examples, and tradeoffs age better than broad commentary.',
+        description: 'Concrete specs, links, prompts, and tradeoffs age better than broad commentary.',
         icon: 'tabler:target-arrow',
       },
       {
         title: 'Reusable over viral',
-        description: 'A post earns its place when it helps you or a reader solve a similar problem later.',
+        description: 'A post earns its place when it helps a reader solve a similar server or coding problem later.',
         icon: 'tabler:repeat',
       },
     ]}
@@ -83,17 +83,17 @@ const metadata = {
     items={[
       {
         title: 'New reader',
-        description: 'Start with the latest posts and the Now page to understand the current direction.',
+        description: 'Start with the latest posts and the server menu to understand the current direction.',
         icon: 'tabler:map',
       },
       {
-        title: 'Collaborator',
-        description: 'Use the Contact page for project ideas, questions, or introductions.',
+        title: 'Plan correction',
+        description: 'Use the Contact page for updated prices, routes, locations, or link issues.',
         icon: 'tabler:messages',
       },
       {
         title: 'Future archive',
-        description: 'Older WordPress posts can be imported gradually as edited, tagged Markdown files.',
+        description: 'New provider pages and AI workflow notes can be added as clean Markdown or Astro pages.',
         icon: 'tabler:database-import',
       },
     ]}

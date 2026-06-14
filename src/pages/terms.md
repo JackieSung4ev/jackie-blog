@@ -5,9 +5,10 @@ layout: '~/layouts/MarkdownLayout.astro'
 
 _Last updated_: June 14, 2026
 
-This is a personal website operated by Your Name.
+This website is operated as JackieSung.
 
-The writing here is provided for general information and personal reference. You are responsible for how you use it.
+The writing and provider summaries here are provided for general information and personal reference. You are responsible
+for how you use them.
 
 ## Content
 
@@ -15,7 +16,8 @@ Unless otherwise noted, short excerpts may be shared with attribution and a link
 
 ## Links
 
-This site may link to third-party websites. Those sites have their own terms, privacy practices, and availability.
+This site may link to third-party websites, including affiliate links. Those sites have their own terms, privacy
+practices, pricing, and availability.
 
 ## Contact
 

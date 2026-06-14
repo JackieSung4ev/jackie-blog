@@ -5,7 +5,7 @@ layout: '~/layouts/MarkdownLayout.astro'
 
 _Last updated_: June 14, 2026
 
-This personal website is designed to be simple and static.
+JackieSung is designed to be simple and static.
 
 ## What is collected
 
@@ -18,4 +18,5 @@ If you email [hello@example.com](mailto:hello@example.com), your message and ema
 
 ## Changes
 
-Update this page before adding analytics, forms, newsletters, comments, or any other third-party service.
+Update this page before adding analytics, forms, newsletters, comments, affiliate tracking scripts, or any other
+third-party service.

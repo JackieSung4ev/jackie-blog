@@ -1,0 +1,438 @@
+---
+import { Icon } from 'astro-icon/components';
+import Layout from '~/layouts/PageLayout.astro';
+
+type IonPlan = {
+  name: string;
+  location: string;
+  cpu: string;
+  ram: string;
+  storage: string;
+  bandwidth: string;
+  network: string;
+  price: string;
+};
+
+const ionAffiliate = 'https://ion.krypt.asia/aff.php?aff=640';
+const checkedDate = 'June 14, 2026';
+
+const plans: IonPlan[] = [
+  {
+    name: 'iON-DA05',
+    location: 'Dallas',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'Global Network',
+    price: '$40.00 USD/mo.',
+  },
+  {
+    name: 'iON-DA05',
+    location: 'Dallas',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'Global Network',
+    price: '$46.00 USD/mo.',
+  },
+  {
+    name: 'iON-DA06',
+    location: 'Dallas',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'Global Network',
+    price: '$80.00 USD/mo.',
+  },
+  {
+    name: 'iON-DA06',
+    location: 'Dallas',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'Global Network',
+    price: '$86.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL05',
+    location: 'Honolulu',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'Global Network',
+    price: '$40.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL05',
+    location: 'Honolulu',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'Global Network',
+    price: '$46.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL06',
+    location: 'Honolulu',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'Global Network',
+    price: '$86.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL06',
+    location: 'Honolulu',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'Global Network',
+    price: '$80.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL07',
+    location: 'Honolulu',
+    cpu: '8 vCPU',
+    ram: '32GB',
+    storage: '640GB',
+    bandwidth: '7TB BW',
+    network: 'Global Network',
+    price: '$160.00 USD/mo.',
+  },
+  {
+    name: 'iON-HNL07',
+    location: 'Honolulu',
+    cpu: '8 vCPU',
+    ram: '32GB',
+    storage: '640GB',
+    bandwidth: '7TB BW',
+    network: 'Global Network',
+    price: '$166.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 1',
+    location: 'Los Angeles',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'China Direct with Global Network',
+    price: '$40.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 2',
+    location: 'Los Angeles',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'China Direct with Global Network',
+    price: '$80.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 1',
+    location: 'Los Angeles',
+    cpu: '8 vCPU',
+    ram: '32GB',
+    storage: '640GB',
+    bandwidth: '7TB BW',
+    network: 'China Direct with Global Network',
+    price: '$160.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 2',
+    location: 'Los Angeles',
+    cpu: '12 vCPU',
+    ram: '64GB',
+    storage: '960GB',
+    bandwidth: '8TB BW',
+    network: 'China Direct with Global Network',
+    price: '$320.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 1',
+    location: 'Silicon Valley',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '5TB BW',
+    network: 'China Direct with Global Network',
+    price: '$40.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 2',
+    location: 'Silicon Valley',
+    cpu: '6 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '6TB BW',
+    network: 'China Direct with Global Network',
+    price: '$80.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 1',
+    location: 'Silicon Valley',
+    cpu: '8 vCPU',
+    ram: '32GB',
+    storage: '640GB',
+    bandwidth: '7TB BW',
+    network: 'China Direct with Global Network',
+    price: '$160.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 2',
+    location: 'Silicon Valley',
+    cpu: '12 vCPU',
+    ram: '64GB',
+    storage: '960GB',
+    bandwidth: '8TB BW',
+    network: 'China Direct with Global Network',
+    price: '$320.00 USD/mo.',
+  },
+  {
+    name: 'iON Basic 2',
+    location: 'Singapore',
+    cpu: '2 vCPU',
+    ram: '4GB',
+    storage: '60GB',
+    bandwidth: '500GB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$55.00 USD/mo.',
+  },
+  {
+    name: 'iON Basic 3',
+    location: 'Singapore',
+    cpu: '2 vCPU',
+    ram: '6GB',
+    storage: '100GB',
+    bandwidth: '1TB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$85.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 1',
+    location: 'Singapore',
+    cpu: '4 vCPU',
+    ram: '8GB',
+    storage: '160GB',
+    bandwidth: '2TB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$155.00 USD/mo.',
+  },
+  {
+    name: 'iON Pro 2',
+    location: 'Singapore',
+    cpu: '8 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '2TB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$275.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 1',
+    location: 'Singapore',
+    cpu: '8 vCPU',
+    ram: '16GB',
+    storage: '320GB',
+    bandwidth: '4TB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$355.00 USD/mo.',
+  },
+  {
+    name: 'iON Elite 2',
+    location: 'Singapore',
+    cpu: '16 vCPU',
+    ram: '32GB',
+    storage: '640GB',
+    bandwidth: '4TB BW',
+    network: 'Combined CN2 & Global Network',
+    price: '$595.00 USD/mo.',
+  },
+];
+
+const locations = [...new Set(plans.map((plan) => plan.location))];
+const groupedPlans = locations.map((location) => ({
+  location,
+  plans: plans.filter((plan) => plan.location === location),
+}));
+
+const startingPrice = plans
+  .map((plan) => Number(plan.price.match(/\$(\d+\.\d+)/)?.[1] ?? Number.POSITIVE_INFINITY))
+  .sort((a, b) => a - b)[0];
+
+const metadata = {
+  title: 'ION Krypt Cloud VPS Plans',
+  description:
+    'An English summary of ION Krypt Cloud VPS plans across Dallas, Honolulu, Los Angeles, Silicon Valley, and Singapore.',
+};
+---
+
+<Layout metadata={metadata}>
+  <section class="bg-slate-50/80 dark:bg-slate-950">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
+      <header class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8 lg:p-10">
+        <p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+          <Icon name="tabler:cloud-computing" class="h-4 w-4" />
+          ION Krypt Cloud
+        </p>
+        <div class="mt-4 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+          <div>
+            <h1 class="text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">
+              ION Krypt Cloud VPS Plans
+            </h1>
+            <p class="mt-5 max-w-3xl text-base leading-7 text-muted md:text-lg">
+              A clean plan index for ION's VPS Cloud catalog across Dallas, Honolulu, Los Angeles, Silicon Valley, and
+              Singapore. The official page lists some same-spec Dallas and Honolulu rows at different monthly prices, so
+              this page keeps those published variants separate instead of guessing an operating-system label.
+            </p>
+          </div>
+
+          <div class="rounded-md border border-rose-200 bg-rose-50 p-5 text-slate-950 dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-white">
+            <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary dark:text-rose-100">Affiliate order link</p>
+            <p class="mt-3 break-all font-mono text-sm text-slate-800 dark:text-rose-50">ion.krypt.asia/aff.php?aff=640</p>
+            <a class="btn-primary mt-5 min-h-11 rounded-md px-4 py-2 text-sm" href={ionAffiliate} target="_blank" rel="noopener noreferrer">
+              Buy Now
+            </a>
+          </div>
+        </div>
+
+        <dl class="mt-8 grid gap-3 sm:grid-cols-4">
+          <div class="rounded-md bg-rose-50 p-4 dark:bg-rose-950/30">
+            <dt class="flex items-center gap-2 text-sm text-primary dark:text-rose-100">
+              <Icon name="tabler:packages" class="h-4 w-4" />
+              Listed plans
+            </dt>
+            <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{plans.length}</dd>
+          </div>
+          <div class="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
+            <dt class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
+              <Icon name="tabler:map-pin" class="h-4 w-4" />
+              Locations
+            </dt>
+            <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">{locations.length}</dd>
+          </div>
+          <div class="rounded-md bg-amber-50 p-4 dark:bg-amber-950/30">
+            <dt class="flex items-center gap-2 text-sm text-amber-800 dark:text-amber-100">
+              <Icon name="tabler:coin" class="h-4 w-4" />
+              From
+            </dt>
+            <dd class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">${startingPrice.toFixed(2)}/mo.</dd>
+          </div>
+          <div class="rounded-md bg-slate-100 p-4 dark:bg-slate-800">
+            <dt class="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-200">
+              <Icon name="tabler:calendar-check" class="h-4 w-4" />
+              Checked
+            </dt>
+            <dd class="mt-2 text-base font-bold text-slate-950 dark:text-white">{checkedDate}</dd>
+          </div>
+        </dl>
+      </header>
+
+      <div class="mt-8 grid gap-8 lg:grid-cols-[280px_1fr]">
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <div class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+              Locations
+            </h2>
+            <nav class="mt-4 grid gap-2" aria-label="ION locations">
+              {
+                groupedPlans.map(({ location, plans }) => (
+                  <a
+                    class="group flex min-h-12 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-primary hover:bg-rose-50 hover:text-primary focus:outline-none focus:ring-4 focus:ring-rose-100 dark:text-slate-200 dark:hover:bg-rose-950/30 dark:focus:ring-rose-950"
+                    href={`#${location.toLowerCase().replaceAll(' ', '-')}`}
+                  >
+                    <span class="flex min-w-0 items-center gap-2">
+                      <Icon name="tabler:map-pin" class="h-4 w-4 shrink-0 text-primary" />
+                      <span class="truncate">{location}</span>
+                    </span>
+                    <span class="rounded bg-slate-100 px-2 py-0.5 text-xs text-slate-600 group-hover:bg-white dark:bg-slate-800 dark:text-slate-300 dark:group-hover:bg-slate-900">
+                      {plans.length}
+                    </span>
+                  </a>
+                ))
+              }
+            </nav>
+
+            <div class="mt-5 rounded-md bg-slate-50 p-4 text-sm leading-6 text-muted dark:bg-slate-800/70">
+              Bandwidth limits are listed as outbound bandwidth on the official ION page.
+            </div>
+          </div>
+        </aside>
+
+        <div class="grid gap-10">
+          {
+            groupedPlans.map(({ location, plans }) => (
+              <section id={location.toLowerCase().replaceAll(' ', '-')} class="scroll-mt-24">
+                <div class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{location}</p>
+                    <h2 class="text-2xl font-bold text-slate-950 dark:text-white">{location} VPS Cloud</h2>
+                  </div>
+                  <p class="text-sm text-muted">{plans.length} published plan rows</p>
+                </div>
+
+                <div class="grid gap-4 xl:grid-cols-2">
+                  {plans.map((plan) => (
+                    <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+                      <div class="flex items-start justify-between gap-4">
+                        <div>
+                          <p class="rounded-md bg-rose-50 px-2 py-1 text-xs font-bold text-primary dark:bg-rose-950/40">
+                            {plan.location}
+                          </p>
+                          <h3 class="mt-3 text-xl font-bold text-slate-950 dark:text-white">{plan.name}</h3>
+                          <p class="mt-2 text-sm leading-6 text-muted">{plan.network}</p>
+                        </div>
+                        <div class="shrink-0 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-right text-primary dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-100">
+                          <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">Monthly</p>
+                          <p class="mt-0.5 text-sm font-bold text-slate-950 dark:text-white">{plan.price}</p>
+                        </div>
+                      </div>
+
+                      <dl class="mt-5 grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
+                        {[
+                          ['tabler:cpu', 'CPU', plan.cpu],
+                          ['tabler:database', 'RAM', plan.ram],
+                          ['tabler:server-cog', 'Storage', plan.storage],
+                          ['tabler:arrows-transfer-up', 'Bandwidth', plan.bandwidth],
+                        ].map(([icon, label, value]) => (
+                          <div class="rounded-md bg-slate-50 p-3 dark:bg-slate-800">
+                            <dt class="flex items-center gap-1.5 text-xs text-muted">
+                              <Icon name={icon} class="h-3.5 w-3.5 text-primary" />
+                              {label}
+                            </dt>
+                            <dd class="mt-1 font-semibold text-slate-950 dark:text-white">{value}</dd>
+                          </div>
+                        ))}
+                      </dl>
+
+                      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+                        <span class="text-sm text-muted">Linux and Windows VPS options are available on ION's order flow.</span>
+                        <a
+                          class="btn-primary min-h-11 rounded-md px-4 py-2 text-sm"
+                          href={ionAffiliate}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Buy Now
+                        </a>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

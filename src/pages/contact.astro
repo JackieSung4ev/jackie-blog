@@ -6,17 +6,17 @@ import Content from '~/components/widgets/Content.astro';
 
 const metadata = {
   title: 'Contact',
-  description: 'Ways to contact Your Name.',
+  description: 'Ways to contact JackieSung.',
 };
 ---
 
 <Layout metadata={metadata}>
   <HeroText
     tagline="Contact"
-    title="Send a thoughtful note."
-    subtitle="Use this page for conversations, collaborations, corrections, and useful links. Replace the placeholder email and social links before publishing."
+    title="Send a useful note."
+    subtitle="Use this page for VPS plan corrections, affiliate-link issues, AI coding topics, collaborations, and useful references."
     callToAction={{ text: 'Email hello@example.com', href: 'mailto:hello@example.com', icon: 'tabler:mail' }}
-    callToAction2={{ text: 'Read first', href: '/about' }}
+    callToAction2={{ text: 'Read the blog', href: '/blog' }}
   />
 
   <Features2
@@ -29,42 +29,42 @@ const metadata = {
         icon: 'tabler:help-circle',
       },
       {
-        title: 'A useful project',
-        description: 'You are building something related to AI, writing workflows, migration, or small software tools.',
+        title: 'A plan update',
+        description: 'A VPS price, location, route, or affiliate link needs to be corrected.',
         icon: 'tabler:tool',
       },
       {
         title: 'A good reference',
-        description: 'You found a paper, article, or tool that belongs in the notes here.',
+        description: 'You found a tool, benchmark, article, or AI coding workflow worth covering.',
         icon: 'tabler:link',
       },
     ]}
   />
 
   <Content
-    title="Elsewhere"
-    subtitle="Keep the permanent contact path simple, then add richer channels only when they are actually maintained."
+    title="Useful links"
+    subtitle="The fastest paths for corrections, updates, and following new notes."
     columns={2}
     items={[
       {
-        title: 'GitHub',
-        description: 'https://github.com/',
-        icon: 'tabler:brand-github',
-      },
-      {
-        title: 'X / Twitter',
-        description: 'https://x.com/',
-        icon: 'tabler:brand-x',
-      },
-      {
-        title: 'LinkedIn',
-        description: 'https://www.linkedin.com/',
-        icon: 'tabler:brand-linkedin',
+        title: 'Email',
+        description: 'hello@example.com',
+        icon: 'tabler:mail',
       },
       {
         title: 'RSS',
         description: '/rss.xml',
         icon: 'tabler:rss',
+      },
+      {
+        title: 'BandwagonHost',
+        description: '/bandwagonhost',
+        icon: 'tabler:server-2',
+      },
+      {
+        title: 'ION Krypt Cloud',
+        description: '/ion-krypt-cloud',
+        icon: 'tabler:cloud',
       },
     ]}
   />
