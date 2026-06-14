@@ -1,0 +1,71 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+
+const metadata = {
+  title: 'Contact',
+  description: 'Ways to contact Your Name.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Contact"
+    title="Send a thoughtful note."
+    subtitle="Use this page for conversations, collaborations, corrections, and useful links. Replace the placeholder email and social links before publishing."
+    callToAction={{ text: 'Email hello@example.com', href: 'mailto:hello@example.com', icon: 'tabler:mail' }}
+    callToAction2={{ text: 'Read first', href: '/about' }}
+  />
+
+  <Features2
+    title="Good reasons to reach out"
+    columns={3}
+    items={[
+      {
+        title: 'A specific question',
+        description: 'A post helped, confused you, or deserves a correction.',
+        icon: 'tabler:help-circle',
+      },
+      {
+        title: 'A useful project',
+        description: 'You are building something related to AI, writing workflows, migration, or small software tools.',
+        icon: 'tabler:tool',
+      },
+      {
+        title: 'A good reference',
+        description: 'You found a paper, article, or tool that belongs in the notes here.',
+        icon: 'tabler:link',
+      },
+    ]}
+  />
+
+  <Content
+    title="Elsewhere"
+    subtitle="Keep the permanent contact path simple, then add richer channels only when they are actually maintained."
+    columns={2}
+    items={[
+      {
+        title: 'GitHub',
+        description: 'https://github.com/',
+        icon: 'tabler:brand-github',
+      },
+      {
+        title: 'X / Twitter',
+        description: 'https://x.com/',
+        icon: 'tabler:brand-x',
+      },
+      {
+        title: 'LinkedIn',
+        description: 'https://www.linkedin.com/',
+        icon: 'tabler:brand-linkedin',
+      },
+      {
+        title: 'RSS',
+        description: '/rss.xml',
+        icon: 'tabler:rss',
+      },
+    ]}
+  />
+</Layout>

@@ -1,0 +1,73 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+import HeroText from '~/components/widgets/HeroText.astro';
+import Features from '~/components/widgets/Features.astro';
+import Content from '~/components/widgets/Content.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+const metadata = {
+  title: 'Now',
+  description: 'A short now page for current focus areas, projects, and site housekeeping.',
+};
+---
+
+<Layout metadata={metadata}>
+  <HeroText
+    tagline="Now"
+    title="What I am paying attention to now."
+    subtitle="Updated June 2026. This page should stay short: current focus, active experiments, and the next few site tasks."
+    callToAction={{ text: 'Latest writing', href: '/blog', icon: 'tabler:book-2' }}
+  />
+
+  <Features
+    title="Current focus"
+    columns={2}
+    items={[
+      {
+        title: 'Rebuilding the public archive',
+        description: 'Selecting which WordPress posts still deserve a place, then rewriting them as clean Markdown entries.',
+        icon: 'tabler:archive',
+      },
+      {
+        title: 'AI as daily infrastructure',
+        description: 'Tracking how AI changes research, editing, coding, and the way small sites should organize knowledge.',
+        icon: 'tabler:sparkles',
+      },
+      {
+        title: 'Small tools over big platforms',
+        description: 'Keeping the site static, portable, and easy to version instead of depending on a heavy CMS.',
+        icon: 'tabler:hammer',
+      },
+      {
+        title: 'Better defaults for writing',
+        description: 'Finding formats for essays, notes, project logs, and resource pages that are easy to keep using.',
+        icon: 'tabler:layout-list',
+      },
+    ]}
+  />
+
+  <Content
+    title="Site housekeeping"
+    subtitle="The next practical steps before this becomes the permanent home page."
+    items={[
+      {
+        title: 'Replace placeholders',
+        description: 'Name, monogram, domain, email, social URLs, and the footer note.',
+      },
+      {
+        title: 'Pick the archive policy',
+        description: 'Decide whether older WordPress links redirect, remain archived, or get rewritten into new posts.',
+      },
+      {
+        title: 'Write one real start-here post',
+        description: 'A short article explaining what changed, what remains useful, and what readers can expect next.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=1400&q=80',
+      alt: 'A notebook beside a laptop during planning.',
+    }}
+  />
+
+  <BlogLatestPosts title="Recently published" count={3} />
+</Layout>

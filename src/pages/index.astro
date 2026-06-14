@@ -1,0 +1,128 @@
+---
+import Layout from '~/layouts/PageLayout.astro';
+
+import Hero from '~/components/widgets/Hero.astro';
+import Features from '~/components/widgets/Features.astro';
+import Features2 from '~/components/widgets/Features2.astro';
+import Content from '~/components/widgets/Content.astro';
+import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+
+const metadata = {
+  title: 'Your Name - Notes on AI, code, and useful work',
+  ignoreTitleTemplate: true,
+  description: 'A personal site and blog for essays, field notes, and working logs about AI, software, and useful ideas.',
+};
+---
+
+<Layout metadata={metadata}>
+  <Hero
+    actions={[
+      { variant: 'primary', text: 'Read the writing', href: '/blog', icon: 'tabler:book-2' },
+      { text: 'About me', href: '/about' },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1800&q=80',
+      alt: 'A writing desk with a notebook, laptop, and coffee.',
+    }}
+  >
+    <Fragment slot="title">Your Name</Fragment>
+
+    <Fragment slot="subtitle">
+      A personal site for essays, field notes, and small software experiments. The WordPress archive can come later;
+      this version starts with the ideas that still feel useful in the AI era.
+    </Fragment>
+  </Hero>
+
+  <Features
+    id="start"
+    tagline="Start here"
+    title="A cleaner home for current work"
+    subtitle="The site is shaped around writing first: fewer legacy pages, clearer paths into the blog, and room for projects that are still alive."
+    columns={3}
+    items={[
+      {
+        title: 'Essays',
+        description: 'Longer thinking about AI, software, tools, and the habits that make work easier to repeat.',
+        icon: 'tabler:notes',
+      },
+      {
+        title: 'Field notes',
+        description: 'Short observations from experiments, migrations, product decisions, and daily technical practice.',
+        icon: 'tabler:route',
+      },
+      {
+        title: 'Projects',
+        description: 'A place to document small tools, site changes, and public experiments without turning them into a portfolio maze.',
+        icon: 'tabler:tool',
+      },
+    ]}
+  />
+
+  <Content
+    id="archive"
+    isReversed
+    items={[
+      {
+        title: 'Keep the durable pieces',
+        description: 'Migrate posts that still answer real questions or show a useful process.',
+      },
+      {
+        title: 'Rewrite the rest as notes',
+        description: 'Old tutorials can become compact changelogs, resource pages, or private reference material.',
+      },
+      {
+        title: 'Publish slower and clearer',
+        description: 'The new structure favors evergreen writing over a large archive that no longer represents your work.',
+      },
+    ]}
+    image={{
+      src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
+      alt: 'A laptop showing a simple writing workflow.',
+    }}
+  >
+    <Fragment slot="content">
+      <h2 class="text-2xl font-bold tracking-normal dark:text-white sm:text-3xl mb-3">
+        From archive to working library
+      </h2>
+      <p>
+        The goal is not to move every WordPress post. The goal is to create a smaller, more trusted library: essays that
+        hold up, notes that show current thinking, and project pages that make your work easier to understand.
+      </p>
+    </Fragment>
+
+    <Fragment slot="bg">
+      <div class="absolute inset-0 bg-green-50/70 dark:bg-transparent"></div>
+    </Fragment>
+  </Content>
+
+  <BlogLatestPosts
+    id="writing"
+    title="Latest writing"
+    linkText="Browse the archive"
+    count={3}
+    information="Starter posts are included so the blog, RSS feed, categories, tags, and post layouts all have real content to render."
+  />
+
+  <Features2
+    title="Next passes"
+    subtitle="The skeleton is intentionally simple. Once your name, domain, and selected old posts are known, these slots can become the permanent site map."
+    columns={3}
+    items={[
+      {
+        title: 'Identity',
+        description: 'Replace the placeholder name, monogram, domain, email, and social URLs.',
+        icon: 'tabler:id',
+      },
+      {
+        title: 'Selected archive',
+        description: 'Import only the WordPress posts worth preserving, then tag them by current usefulness.',
+        icon: 'tabler:archive',
+      },
+      {
+        title: 'Public projects',
+        description: 'Add a projects page when there are two or three pieces worth showing together.',
+        icon: 'tabler:folders',
+      },
+    ]}
+  />
+</Layout>
