@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+  type="button"
+  class="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 inline-flex h-12 w-12 translate-y-3 items-center justify-center rounded-full border border-slate-200 bg-white/95 text-primary opacity-0 shadow-lg shadow-slate-900/10 backdrop-blur transition-[opacity,transform,background-color,color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-primary hover:text-white focus:outline-none focus:ring-4 focus:ring-rose-100 dark:border-slate-700 dark:bg-slate-900/95 dark:text-rose-300 dark:shadow-black/30 dark:hover:bg-primary dark:hover:text-white dark:focus:ring-rose-950/40 sm:right-6 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]"
+  aria-label="Back to top"
+  aria-hidden="true"
+  data-back-to-top
+  data-pagefind-ignore
+  tabindex="-1"
+  title="Back to top"
+>
+  <Icon name="tabler:arrow-up" class="h-5 w-5" aria-hidden="true" />
+</button>
+
+<style>
+  [data-back-to-top] {
+    pointer-events: none;
+  }
+
+  [data-back-to-top][data-visible='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  [data-back-to-top][data-visible='true']:hover {
+    transform: translateY(-0.125rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-back-to-top] {
+      transition-duration: 1ms;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initBackToTop() {
+      if (window.__backToTopCleanup) {
+        window.__backToTopCleanup();
+      }
+
+      const button = document.querySelector('[data-back-to-top]');
+      if (!button) {
+        window.__backToTopCleanup = null;
+        return;
+      }
+
+      const threshold = 420;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let ticking = false;
+      let scrollAnimation = 0;
+
+      function setVisible(isVisible) {
+        button.dataset.visible = isVisible ? 'true' : 'false';
+        button.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+        button.tabIndex = isVisible ? 0 : -1;
+      }
+
+      function updateVisibility() {
+        setVisible(window.scrollY > threshold);
+        ticking = false;
+      }
+
+      function onScroll() {
+        if (!ticking) {
+          window.requestAnimationFrame(updateVisibility);
+          ticking = true;
+        }
+      }
+
+      function easeOutBezier(progress) {
+        const remaining = 1 - progress;
+        return 1 - remaining * remaining * remaining;
+      }
+
+      function scrollToTop() {
+        window.cancelAnimationFrame(scrollAnimation);
+
+        if (reducedMotion.matches) {
+          window.scrollTo(0, 0);
+          return;
+        }
+
+        const startY = window.scrollY;
+        const duration = Math.min(760, Math.max(420, startY * 0.35));
+        const startedAt = window.performance.now();
+
+        function step(now) {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const eased = easeOutBezier(progress);
+          window.scrollTo(0, Math.round(startY * (1 - eased)));
+
+          if (progress < 1) {
+            scrollAnimation = window.requestAnimationFrame(step);
+          }
+        }
+
+        scrollAnimation = window.requestAnimationFrame(step);
+      }
+
+      document.addEventListener('scroll', onScroll, { passive: true });
+      button.addEventListener('click', scrollToTop);
+      updateVisibility();
+
+      window.__backToTopCleanup = function () {
+        document.removeEventListener('scroll', onScroll);
+        button.removeEventListener('click', scrollToTop);
+        window.cancelAnimationFrame(scrollAnimation);
+      };
+    }
+
+    window.__initBackToTop = initBackToTop;
+
+    if (!window.__backToTopBound) {
+      window.__backToTopBound = true;
+      window.addEventListener('pageshow', () => window.__initBackToTop && window.__initBackToTop());
+      document.addEventListener('astro:after-swap', () => window.__initBackToTop && window.__initBackToTop());
+    }
+
+    initBackToTop();
+  })();
+</script>
