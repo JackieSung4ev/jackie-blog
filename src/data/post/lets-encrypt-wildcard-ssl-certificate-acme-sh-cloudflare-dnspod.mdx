@@ -1,0 +1,322 @@
+---
+publishDate: 2019-12-18T00:00:00Z
+updateDate: 2026-06-15T00:00:00Z
+author: 'Jackie Sung'
+title: "Issue and Auto-Renew a Let's Encrypt Wildcard SSL Certificate with acme.sh"
+excerpt: "Use acme.sh with DNS-01 validation to issue and auto-renew wildcard Let's Encrypt certificates through Cloudflare, DNSPod, or Tencent Cloud DNSPod APIs."
+image: ~/assets/images/blog/acme-wildcard-ssl-cover.png
+category: 'Linux'
+tags:
+  - linux
+  - ssl
+  - lets-encrypt
+  - acme-sh
+  - wildcard
+  - dns
+  - cloudflare
+  - dnspod
+---
+
+Wildcard certificates need DNS validation. That is the whole trick: instead of putting a file on your web server, the
+ACME client creates a temporary TXT record such as `_acme-challenge.example.com`, Let's Encrypt checks it, and the record
+is removed afterward.
+
+This is an updated version of my old acme.sh note. The big change is that Cloudflare should now use a scoped API Token
+instead of the old Global API Key, and DNSPod users have two practical paths: the classic DNSPod token or the newer
+Tencent Cloud DNSPod API.
+
+## What This Setup Does
+
+We will:
+
+- install acme.sh;
+- tell it to use Let's Encrypt;
+- issue `example.com` and `*.example.com`;
+- use DNS API credentials for Cloudflare or DNSPod;
+- install the certificate into an NGINX-friendly path;
+- let acme.sh renew automatically.
+
+Replace `example.com` everywhere with your own domain.
+
+## Install acme.sh
+
+On Debian or Ubuntu:
+
+```bash
+sudo apt update
+sudo apt install -y curl socat cron ca-certificates
+```
+
+On CentOS, RHEL, AlmaLinux, or Rocky Linux:
+
+```bash
+sudo dnf install -y curl socat cronie ca-certificates
+sudo systemctl enable --now crond
+```
+
+For this guide, run acme.sh as root. The final certificate files live under `/etc/ssl`, and the renewal job needs to
+reload NGINX after installing a fresh certificate.
+
+```bash
+sudo -i
+```
+
+Install acme.sh with your email address:
+
+```bash
+curl https://get.acme.sh | sh -s email=admin@example.com
+```
+
+Reload your shell or call acme.sh directly:
+
+```bash
+source ~/.bashrc
+~/.acme.sh/acme.sh --version
+```
+
+acme.sh can use several certificate authorities. Because this article is about Let's Encrypt, set it explicitly:
+
+```bash
+~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+```
+
+You can also keep the default CA unchanged and add `--server letsencrypt` to every issue command.
+
+## Option A: Cloudflare API Token
+
+This is the recommended Cloudflare path. Create a Cloudflare API Token with the smallest permissions you can use:
+
+- `Zone -> DNS -> Edit`
+- limited to the zone you are issuing for, such as `example.com`
+
+Then set the token and either the Zone ID or Account ID. Zone ID is simplest when you are only issuing for one domain.
+
+```bash
+export CF_Token="your_cloudflare_api_token"
+export CF_Zone_ID="your_cloudflare_zone_id"
+```
+
+Issue an ECDSA wildcard certificate:
+
+```bash
+~/.acme.sh/acme.sh --issue \
+  --server letsencrypt \
+  --dns dns_cf \
+  -d example.com \
+  -d '*.example.com' \
+  --keylength ec-256
+```
+
+If you manage several zones under the same account, use `CF_Account_ID` instead:
+
+```bash
+export CF_Token="your_cloudflare_api_token"
+export CF_Account_ID="your_cloudflare_account_id"
+
+~/.acme.sh/acme.sh --issue \
+  --server letsencrypt \
+  --dns dns_cf \
+  -d example.com \
+  -d '*.example.com' \
+  --keylength ec-256
+```
+
+The old Cloudflare `CF_Key` and `CF_Email` method still exists, but it uses the Global API Key and is not recommended
+unless you have a specific legacy reason.
+
+## Option B: DNSPod.cn API
+
+For the classic DNSPod.cn API, create a DNSPod Token in your DNSPod account settings. acme.sh expects the token ID and
+token key as `DP_Id` and `DP_Key`.
+
+```bash
+export DP_Id="your_dnspod_token_id"
+export DP_Key="your_dnspod_token_key"
+```
+
+Issue the wildcard certificate:
+
+```bash
+~/.acme.sh/acme.sh --issue \
+  --server letsencrypt \
+  --dns dns_dp \
+  -d example.com \
+  -d '*.example.com' \
+  --keylength ec-256
+```
+
+This is the shortest path if your domain is still managed directly inside DNSPod.cn.
+
+## Option C: Tencent Cloud DNSPod API
+
+If your DNSPod zone is managed through Tencent Cloud, use the Tencent Cloud DNSPod plugin instead.
+
+Create an API key in Tencent Cloud CAM, then export:
+
+```bash
+export Tencent_SecretId="your_tencent_secret_id"
+export Tencent_SecretKey="your_tencent_secret_key"
+```
+
+Issue the certificate with `dns_tencent`:
+
+```bash
+~/.acme.sh/acme.sh --issue \
+  --server letsencrypt \
+  --dns dns_tencent \
+  -d example.com \
+  -d '*.example.com' \
+  --keylength ec-256
+```
+
+Use this path when your DNS records live in Tencent Cloud DNSPod rather than the older standalone DNSPod account.
+
+## Install the Certificate for NGINX
+
+Create a stable directory for the live certificate files:
+
+```bash
+mkdir -p /etc/ssl/acme/example.com
+```
+
+Install the ECDSA certificate:
+
+```bash
+~/.acme.sh/acme.sh --install-cert \
+  -d example.com \
+  --ecc \
+  --key-file /etc/ssl/acme/example.com/privkey.pem \
+  --fullchain-file /etc/ssl/acme/example.com/fullchain.pem \
+  --reloadcmd "systemctl reload nginx"
+```
+
+Then point NGINX at those files:
+
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name example.com *.example.com;
+
+    ssl_certificate /etc/ssl/acme/example.com/fullchain.pem;
+    ssl_certificate_key /etc/ssl/acme/example.com/privkey.pem;
+
+    root /var/www/example.com;
+}
+```
+
+Test and reload:
+
+```bash
+nginx -t
+systemctl reload nginx
+```
+
+## How Auto-Renewal Works
+
+After the first successful issue, acme.sh saves the DNS API variables it used in `~/.acme.sh/account.conf`. That means
+future renewals do not need you to export `CF_Token`, `DP_Id`, or `Tencent_SecretId` again.
+
+The installer normally creates a cron job. Check it:
+
+```bash
+crontab -l | grep acme.sh
+```
+
+You can test the renewal flow without waiting:
+
+```bash
+~/.acme.sh/acme.sh --cron --home ~/.acme.sh --force
+```
+
+During renewal, acme.sh will:
+
+1. create the DNS TXT record through the provider API;
+2. wait for DNS propagation;
+3. renew the certificate if needed;
+4. install the renewed files to the paths from `--install-cert`;
+5. run the stored `--reloadcmd`.
+
+If you prefer systemd timers instead of cron, create a oneshot service and timer.
+
+`/etc/systemd/system/acme_letsencrypt.service`:
+
+```ini
+[Unit]
+Description=Renew certificates using acme.sh
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=oneshot
+ExecStart=/root/.acme.sh/acme.sh --cron --home /root/.acme.sh
+```
+
+`/etc/systemd/system/acme_letsencrypt.timer`:
+
+```ini
+[Unit]
+Description=Daily acme.sh renewal check
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+Enable it:
+
+```bash
+systemctl daemon-reload
+systemctl enable --now acme_letsencrypt.timer
+systemctl list-timers | grep acme
+```
+
+If you use the systemd version, disable the cron entry to avoid two schedulers doing the same job.
+
+## Useful Commands
+
+List certificates:
+
+```bash
+~/.acme.sh/acme.sh --list
+```
+
+Force renew one certificate:
+
+```bash
+~/.acme.sh/acme.sh --renew -d example.com --ecc --force
+```
+
+Show debug output while issuing:
+
+```bash
+~/.acme.sh/acme.sh --issue \
+  --server letsencrypt \
+  --dns dns_cf \
+  -d example.com \
+  -d '*.example.com' \
+  --keylength ec-256 \
+  --debug 2
+```
+
+## Small Safety Notes
+
+- Prefer Cloudflare API Tokens over the Global API Key.
+- Keep DNS API credentials out of shell history if you are sharing the server.
+- Make sure `~/.acme.sh/account.conf` is readable only by the issuing user.
+- If you run acme.sh as a non-root user, keep the certificate target path writable and grant only the exact reload
+  permission you need.
+- Use `--staging` while testing many times, then remove it for the real certificate.
+- Keep the DNS provider account protected with 2FA.
+
+## Notes and Sources
+
+- [Original article on Jackie Sung's Blog](https://blog.jackiesung.com/linux/how-to-issue-and-auto-renew-a-lets-encrypt-wildcard-ssl-certificate-with-acme-sh.html)
+- [acme.sh install guide](https://github.com/acmesh-official/acme.sh/wiki/How-to-install)
+- [acme.sh DNS API guide](https://github.com/acmesh-official/acme.sh/wiki/dnsapi)
+- [acme.sh DNS API guide, continued](https://github.com/acmesh-official/acme.sh/wiki/dnsapi2)
+- [acme.sh server selection](https://github.com/acmesh-official/acme.sh/wiki/Server)
+- [acme.sh systemd timer guide](https://github.com/acmesh-official/acme.sh/wiki/Using-systemd-units-instead-of-cron)
+- [acme.sh hook and reload command notes](https://github.com/acmesh-official/acme.sh/wiki/Using-pre-hook-post-hook-renew-hook-reloadcmd)

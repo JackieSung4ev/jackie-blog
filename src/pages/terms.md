@@ -5,7 +5,7 @@ layout: '~/layouts/MarkdownLayout.astro'
 
 _Last updated_: June 14, 2026
 
-This website is operated as JackieSung.
+This website is operated as Jackie Sung.
 
 The writing and provider summaries here are provided for general information and personal reference. You are responsible
 for how you use them.

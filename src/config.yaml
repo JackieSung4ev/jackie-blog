@@ -11,7 +11,7 @@ metadata:
   title:
     default: Jackie Sung
     template: '%s | Jackie Sung'
-  description: 'English notes on VPS deals, cloud servers, AI coding tools, and practical vibe coding workflows.'
+  description: 'English notes on VPS deals, cloud servers, vibe coding tools, and practical AI-assisted development workflows.'
   robots:
     index: true
     follow: true

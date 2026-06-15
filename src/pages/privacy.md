@@ -5,7 +5,7 @@ layout: '~/layouts/MarkdownLayout.astro'
 
 _Last updated_: June 14, 2026
 
-JackieSung is designed to be simple and static.
+Jackie Sung is designed to be simple and static.
 
 ## What is collected
 

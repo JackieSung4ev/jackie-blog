@@ -1,6 +1,6 @@
 ---
 publishDate: 2026-06-12T00:00:00Z
-author: 'JackieSung'
+author: 'Jackie Sung'
 title: 'GPT Prompts That Survive Contact With Code'
 excerpt: 'Better coding prompts are small, inspectable, and tied to verification rather than vibes alone.'
 image: https://images.unsplash.com/photo-1555949963-aa79dcee981c?auto=format&fit=crop&w=1400&q=80

@@ -1,6 +1,6 @@
 ---
 publishDate: 2026-06-13T00:00:00Z
-author: 'JackieSung'
+author: 'Jackie Sung'
 title: 'Claude Code and the Vibe Coding Loop'
 excerpt: 'Vibe coding becomes useful when the loop is tight: describe, inspect, edit, run, and correct.'
 image: https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1400&q=80

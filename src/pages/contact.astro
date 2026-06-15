@@ -31,9 +31,9 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
-    <div class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:py-24">
+    <div class="site-container py-16 lg:py-24">
       <div
-        class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
+        class="mx-auto max-w-3xl rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
       >
         <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
           <img
@@ -67,13 +67,13 @@ const metadata = {
         </div>
       </div>
 
-      <section class="mt-8">
+      <section class="mx-auto mt-8 max-w-5xl">
         <div class="mb-4">
           <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Good excuses to email</p>
           <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">Send the interesting part</h2>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-3">
+        <div class="grid gap-4 md:grid-cols-3 2xl:grid-cols-3">
           {
             reasons.map(({ title, description, icon }) => (
               <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">

@@ -1,9 +1,11 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { I18N, SITE } from 'astrowind:config';
 
 import Image from '~/components/common/Image.astro';
 import PostTags from '~/components/blog/Tags.astro';
 import SocialShare from '~/components/common/SocialShare.astro';
+import TableOfContents from '~/components/blog/TableOfContents.astro';
 
 import { getPermalink } from '~/utils/permalinks';
 import { getFormattedDate } from '~/utils/utils';
@@ -16,12 +18,42 @@ export interface Props {
 }
 
 const { post, url } = Astro.props;
+const origin = new URL(SITE.site).origin;
+const imageSrc = typeof post.image === 'string' ? post.image : post.image?.src;
+const imageUrl = imageSrc && !imageSrc.startsWith('~') ? new URL(imageSrc, origin).toString() : undefined;
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description: post.excerpt,
+  image: imageUrl ? [imageUrl] : undefined,
+  datePublished: post.publishDate.toISOString(),
+  dateModified: (post.updateDate || post.publishDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.author || SITE.name,
+    url: `${origin}/`,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: SITE.name,
+    url: `${origin}/`,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': url.toString(),
+  },
+  inLanguage: I18N?.language || 'en',
+  keywords: post.tags?.map((tag) => tag.title).join(', '),
+  articleSection: post.category?.title,
+};
 ---
 
-<section class="py-8 sm:py-16 lg:py-20 mx-auto">
+<section class="article-container py-8 sm:py-16 lg:py-20">
   <article>
+    <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} is:inline />
     <header class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-      <div class="flex justify-between flex-col sm:flex-row max-w-3xl mx-auto mt-0 mb-2 px-4 sm:px-6 sm:items-center">
+      <div class="mx-auto mb-2 mt-0 flex max-w-4xl flex-col justify-between sm:flex-row sm:items-center">
         <p>
           <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
           <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
@@ -56,14 +88,10 @@ const { post, url } = Astro.props;
         </p>
       </div>
 
-      <h1
-        class="px-4 sm:px-6 max-w-3xl mx-auto text-4xl md:text-5xl font-bold leading-tighter tracking-normal font-heading"
-      >
+      <h1 class="mx-auto max-w-4xl text-4xl font-bold leading-tighter tracking-normal font-heading md:text-5xl">
         {post.title}
       </h1>
-      <p
-        class="max-w-3xl mx-auto mt-4 mb-8 px-4 sm:px-6 text-xl md:text-2xl text-muted dark:text-slate-400"
-      >
+      <p class="mx-auto mb-8 mt-4 max-w-4xl text-xl text-muted dark:text-slate-400 md:text-2xl">
         {post.excerpt}
       </p>
 
@@ -71,31 +99,152 @@ const { post, url } = Astro.props;
         post.image ? (
           <Image
             src={post.image}
-            class="max-w-full lg:max-w-[900px] mx-auto mb-6 sm:rounded-md bg-gray-400 dark:bg-slate-700"
-            widths={[400, 900]}
-            sizes="(max-width: 900px) 400px, 900px"
+            class="mx-auto mb-6 w-full max-w-[1600px] bg-gray-400 dark:bg-slate-700 sm:rounded-md"
+            widths={[400, 900, 1200, 1600]}
+            sizes="(max-width: 900px) 100vw, (max-width: 1700px) calc(100vw - 3rem), 1600px"
             alt={post?.excerpt || ''}
-            width={900}
-            height={506}
+            width={1600}
+            height={901}
             format="webp"
             loading="eager"
             decoding="async"
           />
         ) : (
-          <div class="max-w-3xl mx-auto px-4 sm:px-6">
+          <div class="mx-auto max-w-[1600px]">
             <div class="border-t dark:border-slate-700" />
           </div>
         )
       }
     </header>
     <div
-      class="mx-auto px-6 sm:px-6 max-w-3xl prose prose-md lg:prose-xl dark:prose-invert dark:prose-headings:text-slate-300 prose-headings:font-heading prose-headings:leading-tighter prose-headings:tracking-normal prose-headings:font-bold prose-a:text-primary dark:prose-a:text-blue-400 prose-img:rounded-md prose-img:shadow-lg mt-8 prose-headings:scroll-mt-[80px] prose-li:my-0"
+      class="mx-auto mt-8 grid max-w-[1440px] gap-10 xl:grid-cols-[minmax(0,960px)_16rem] xl:items-start 2xl:grid-cols-[minmax(0,1040px)_18rem]"
     >
-      <slot />
+      <div
+        data-code-copy-scope
+        class="prose prose-md min-w-0 max-w-none dark:prose-invert dark:prose-headings:text-slate-300 lg:prose-xl prose-headings:scroll-mt-[96px] prose-headings:font-heading prose-headings:font-bold prose-headings:leading-tighter prose-headings:tracking-normal prose-a:text-primary prose-img:rounded-md prose-img:shadow-lg prose-li:my-0 dark:prose-a:text-blue-400"
+      >
+        <slot />
+      </div>
+      <TableOfContents headings={post.headings} />
     </div>
-    <div class="mx-auto px-6 sm:px-6 max-w-3xl mt-8 flex justify-between flex-col sm:flex-row">
+    <div class="mx-auto mt-8 flex max-w-[1440px] flex-col justify-between sm:flex-row">
       <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
       <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
     </div>
   </article>
 </section>
+
+<script is:inline>
+  (() => {
+    const copyIcon = `
+      <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+        <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+      </svg>
+    `;
+    const checkIcon = `
+      <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5"></path>
+      </svg>
+    `;
+
+    const writeClipboard = async (text) => {
+      if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(text);
+    };
+
+    const enhanceCodeBlocks = () => {
+      document.querySelectorAll('[data-code-copy-scope] pre').forEach((pre) => {
+        if (!(pre instanceof HTMLElement) || pre.dataset.copyEnhanced === 'true') return;
+
+        const code = pre.querySelector('code');
+        if (!code) return;
+
+        pre.dataset.copyEnhanced = 'true';
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'code-copy-button';
+        button.setAttribute('aria-label', 'Copy code');
+        button.title = 'Copy code';
+        button.innerHTML = copyIcon;
+
+        button.addEventListener('click', async () => {
+          const text = (code.textContent || '').replace(/\n$/, '');
+
+          try {
+            await writeClipboard(text);
+            button.dataset.copied = 'true';
+            button.setAttribute('aria-label', 'Code copied');
+            button.title = 'Code copied';
+            button.innerHTML = checkIcon;
+
+            window.setTimeout(() => {
+              if (!button.isConnected) return;
+              button.dataset.copied = 'false';
+              button.setAttribute('aria-label', 'Copy code');
+              button.title = 'Copy code';
+              button.innerHTML = copyIcon;
+            }, 1600);
+          } catch {
+            button.setAttribute('aria-label', 'Copy failed');
+            button.title = 'Copy failed';
+          }
+        });
+
+        pre.appendChild(button);
+      });
+    };
+
+    enhanceCodeBlocks();
+    document.addEventListener('astro:page-load', enhanceCodeBlocks);
+  })();
+</script>
+
+<style is:global>
+  [data-code-copy-scope] pre {
+    position: relative;
+    padding-top: 3.75rem !important;
+  }
+
+  [data-code-copy-scope] pre code {
+    min-width: max-content;
+  }
+
+  .code-copy-button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: inline-flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(148 163 184 / 35%);
+    border-radius: 0.375rem;
+    background: rgb(15 23 42 / 82%);
+    color: rgb(226 232 240);
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease;
+  }
+
+  .code-copy-button:hover {
+    border-color: rgb(226 232 240 / 55%);
+    background: rgb(30 41 59 / 94%);
+    color: white;
+  }
+
+  .code-copy-button:focus-visible {
+    outline: 2px solid rgb(195 7 63);
+    outline-offset: 2px;
+  }
+
+  .code-copy-button[data-copied='true'] {
+    border-color: rgb(134 239 172 / 55%);
+    color: rgb(134 239 172);
+  }
+</style>

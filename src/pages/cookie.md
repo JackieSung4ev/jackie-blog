@@ -5,7 +5,7 @@ layout: '~/layouts/MarkdownLayout.astro'
 
 _Last updated_: June 15, 2026
 
-JackieSung is a static website and does not intentionally set first-party cookies for accounts, comments, newsletters,
+Jackie Sung is a static website and does not intentionally set first-party cookies for accounts, comments, newsletters,
 or advertising.
 
 ## Essential cookies

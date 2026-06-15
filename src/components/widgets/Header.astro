@@ -58,15 +58,13 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
   <div class="absolute inset-0"></div>
   <div
     class:list={[
-      'relative text-default py-3 px-3 md:px-6 mx-auto w-full',
+      'relative text-default py-3 mx-auto w-full',
+      isFullWidth ? 'px-3 md:px-6' : 'site-container',
       {
         'md:flex md:justify-between': position !== 'center',
       },
       {
         'md:grid md:grid-cols-3 md:items-center': position === 'center',
-      },
-      {
-        'max-w-7xl': !isFullWidth,
       },
     ]}
   >
@@ -83,7 +81,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
       aria-label="Main navigation"
     >
       <ul
-        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-[0.9375rem] tracking-normal font-medium md:justify-center"
+        class="flex flex-col md:flex-row md:self-center w-full md:w-auto text-xl md:text-base xl:text-[1.0625rem] tracking-normal font-medium md:justify-center"
       >
         {
           links.map(({ text, href, links }) => (
@@ -150,7 +148,7 @@ const currentPath = `/${trimSlash(new URL(Astro.url).pathname)}`;
             )
           }
           <form class="hidden lg:flex" action={getAsset('/search')} role="search">
-            <label class="sr-only" for="header-search">Search JackieSung</label>
+            <label class="sr-only" for="header-search">Search Jackie Sung</label>
             <div
               class="flex h-10 w-52 items-center rounded-md border border-slate-200 bg-white/90 text-sm shadow-sm transition focus-within:border-primary focus-within:ring-4 focus-within:ring-rose-100 dark:border-slate-700 dark:bg-slate-900/90 dark:focus-within:ring-rose-950/40 xl:w-64"
             >

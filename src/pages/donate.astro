@@ -37,17 +37,18 @@ const supporters = [
   { name: '笼.', amount: '￥5' },
 ];
 
-const paymentMethods = ['Paypal', 'Alipay', 'WechatPay'];
+const paymentMethods = ['PayPal', 'Alipay', 'WeChat Pay'];
 
 const metadata = {
   title: 'Donate',
-  description: 'Support JackieSung through Paypal, Alipay, or WechatPay, with the original donation record preserved.',
+  description:
+    'Support Jackie Sung through PayPal, Alipay, or WeChat Pay, with the original donation record preserved.',
 };
 ---
 
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
-    <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:py-16">
+    <div class="site-container py-12 lg:py-16">
       <header
         class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
       >
@@ -57,7 +58,7 @@ const metadata = {
         </p>
         <h1 class="mt-4 text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">Donate</h1>
         <p class="mt-5 max-w-3xl text-base leading-7 text-muted md:text-lg">
-          If you find my blog helpful and you are willing to sponsor it, Paypal, Alipay, and WechatPay are supported.
+          If you find my blog helpful and you are willing to sponsor it, PayPal, Alipay, and WeChat Pay are supported.
           Each donation will be on record. Thanks to everyone who has supported me.
         </p>
 
@@ -85,7 +86,7 @@ const metadata = {
           <p class="text-sm text-muted">{supporters.length} recorded donations</p>
         </div>
 
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6">
           {
             supporters.map(({ name, amount }) => (
               <article class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">

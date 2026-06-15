@@ -1,0 +1,64 @@
+---
+import { I18N, METADATA, SITE } from 'astrowind:config';
+
+const origin = new URL(SITE.site).origin;
+const homeUrl = `${origin}/`;
+const personId = `${origin}/#person`;
+const websiteId = `${origin}/#website`;
+const blogId = `${origin}/blog#blog`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': personId,
+      name: SITE.name,
+      url: homeUrl,
+      email: 'mailto:hello@jackiesung.com',
+      image: `${origin}/images/b350ccf51fe42b9a186729de8bc265f8.jpg`,
+      jobTitle: ['Full-stack developer', 'Visual designer', 'Independent app developer'],
+      knowsAbout: [
+        'Full-stack development',
+        'Visual design',
+        'Vibe coding',
+        'Independent app development',
+        'Cross-border e-commerce',
+        'VPS hosting',
+        'Cloud servers',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': websiteId,
+      url: homeUrl,
+      name: SITE.name,
+      description: METADATA?.description,
+      inLanguage: I18N?.language || 'en',
+      publisher: { '@id': personId },
+      author: { '@id': personId },
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${origin}/search?q={search_term_string}`,
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'Blog',
+      '@id': blogId,
+      url: `${origin}/blog`,
+      name: `${SITE.name} Blog`,
+      description: METADATA?.description,
+      inLanguage: I18N?.language || 'en',
+      publisher: { '@id': personId },
+      author: { '@id': personId },
+      isPartOf: { '@id': websiteId },
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />

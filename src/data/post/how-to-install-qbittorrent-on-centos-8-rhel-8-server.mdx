@@ -1,0 +1,271 @@
+---
+publishDate: 2021-02-03T00:00:00Z
+updateDate: 2026-06-15T00:00:00Z
+author: 'Jackie Sung'
+title: 'How to Install qBittorrent on CentOS, RHEL, Debian, and Ubuntu Server'
+excerpt: 'Install qBittorrent-nox on a headless Linux server, run it with systemd, open the Web UI, and optionally place it behind NGINX.'
+image: ~/assets/images/blog/qbittorrent-linux-server-cover.png
+category: 'Linux'
+tags:
+  - linux
+  - qbittorrent
+  - centos
+  - rhel
+  - debian
+  - ubuntu
+  - server
+---
+
+qBittorrent is a clean, open-source BitTorrent client. On a server, the useful package is `qbittorrent-nox`: no desktop
+window, just the Web UI and a background process that can be managed with `systemd`.
+
+This is an updated version of my old CentOS 8/RHEL 8 note. The CentOS/RHEL part is still here, but I have also added
+Debian and Ubuntu because that is where many small VPS boxes actually live.
+
+## Before You Start
+
+Use a normal user for daily SSH work, and run commands with `sudo`. In the examples below, qBittorrent runs as a separate
+service user called `qbtuser`.
+
+If you run this on a public VPS, do not expose the Web UI naked to the whole internet for long. At minimum, change the
+default password immediately. A reverse proxy, VPN, firewall allowlist, or private tunnel is much better.
+
+## Install on CentOS 8, RHEL 8, AlmaLinux, or Rocky Linux
+
+CentOS 8 itself is end-of-life, so for a fresh machine I would use AlmaLinux, Rocky Linux, CentOS Stream, or a supported
+RHEL clone. For the package install, the important part is EPEL.
+
+```bash
+sudo dnf install -y epel-release
+sudo dnf install -y qbittorrent-nox
+```
+
+On some RHEL 8 systems, `epel-release` is not available until CodeReady Builder is enabled. If the simple command above
+fails, use this path instead:
+
+```bash
+sudo dnf install -y dnf-plugins-core
+sudo subscription-manager repos --enable codeready-builder-for-rhel-8-$(arch)-rpms
+sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+sudo dnf install -y qbittorrent-nox
+```
+
+## Install on Debian
+
+Debian includes `qbittorrent-nox` in the official package archive.
+
+```bash
+sudo apt update
+sudo apt install -y qbittorrent-nox
+```
+
+That is the boring path, which is usually the best path on a server.
+
+## Install on Ubuntu
+
+Ubuntu also includes `qbittorrent-nox`.
+
+```bash
+sudo apt update
+sudo apt install -y qbittorrent-nox
+```
+
+If you specifically want a newer qBittorrent build than the Ubuntu archive provides, qBittorrent maintains an official
+stable PPA for supported Ubuntu releases.
+
+```bash
+sudo apt install -y software-properties-common
+sudo add-apt-repository ppa:qbittorrent-team/qbittorrent-stable
+sudo apt update
+sudo apt install -y qbittorrent-nox
+```
+
+For a production server, I usually prefer the distro package unless I need a newer Web UI feature or a bug fix.
+
+## Create a Service User
+
+Create a dedicated user. On Debian and Ubuntu:
+
+```bash
+sudo adduser --disabled-password --gecos "" qbtuser
+```
+
+On CentOS/RHEL-style systems:
+
+```bash
+sudo useradd -m -s /bin/bash qbtuser
+```
+
+Run qBittorrent once as that user. This lets you accept the legal notice and see the initial Web UI login information.
+
+```bash
+sudo -u qbtuser -H qbittorrent-nox
+```
+
+You should see the Web UI address, usually `http://localhost:8080`. The administrator username is usually `admin`, and
+older/current distro builds commonly start with `adminadmin` as the password. If your qBittorrent build prints a
+temporary password instead, use the password shown in the terminal.
+
+Press `Ctrl-C` after the first run. Then lock the service user out of direct shell login.
+
+Debian and Ubuntu:
+
+```bash
+sudo usermod -s /usr/sbin/nologin qbtuser
+```
+
+CentOS/RHEL:
+
+```bash
+sudo usermod -s /sbin/nologin qbtuser
+```
+
+## Start qBittorrent with systemd
+
+Most modern packages include the template service `qbittorrent-nox@.service`. Check it first:
+
+```bash
+systemctl cat qbittorrent-nox@.service
+```
+
+If it exists, start qBittorrent as `qbtuser` and enable it at boot:
+
+```bash
+sudo systemctl enable --now qbittorrent-nox@qbtuser
+systemctl status qbittorrent-nox@qbtuser --no-pager
+```
+
+Useful service commands:
+
+```bash
+sudo systemctl restart qbittorrent-nox@qbtuser
+sudo systemctl stop qbittorrent-nox@qbtuser
+sudo journalctl -u qbittorrent-nox@qbtuser -n 100 --no-pager
+```
+
+If the package does not include a service template, create one:
+
+```ini
+[Unit]
+Description=qBittorrent-nox service for %i
+Documentation=man:qbittorrent-nox(1)
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=exec
+User=%i
+ExecStart=/usr/bin/qbittorrent-nox
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Save that file as `/etc/systemd/system/qbittorrent-nox@.service`, then reload and start:
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now qbittorrent-nox@qbtuser
+```
+
+## Open the Web UI
+
+From your local browser, use:
+
+```text
+http://your-server-ip:8080
+```
+
+After logging in, go to `Tools -> Options -> Web UI` and change the password immediately.
+
+If you use a firewall, open the port only when you really need direct access.
+
+CentOS/RHEL with firewalld:
+
+```bash
+sudo firewall-cmd --add-port=8080/tcp --permanent
+sudo firewall-cmd --reload
+```
+
+Debian/Ubuntu with UFW:
+
+```bash
+sudo ufw allow 8080/tcp
+```
+
+For a cleaner setup, keep qBittorrent bound to `127.0.0.1` and access it through a reverse proxy or VPN.
+
+## Optional NGINX Reverse Proxy
+
+Here is a simple subdomain-style NGINX example. Replace `qbt.example.com` and the certificate paths with your own.
+
+```nginx
+server {
+    listen 80;
+    server_name qbt.example.com;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name qbt.example.com;
+
+    ssl_certificate /etc/letsencrypt/live/qbt.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/qbt.example.com/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080/;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+Then test and reload NGINX:
+
+```bash
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+If you prefer a subpath like `example.com/qbt/`, use qBittorrent's official NGINX reverse proxy notes. Subpath proxies
+need a little more care than a dedicated subdomain.
+
+## Quick Troubleshooting
+
+Check whether qBittorrent is listening:
+
+```bash
+ss -lntp | grep 8080
+```
+
+Check service logs:
+
+```bash
+sudo journalctl -u qbittorrent-nox@qbtuser -n 100 --no-pager
+```
+
+Check the qBittorrent version:
+
+```bash
+qbittorrent-nox --version
+```
+
+If login fails repeatedly, wait a bit before trying again. qBittorrent may temporarily ban an IP after too many failed
+Web UI login attempts.
+
+## Notes and Sources
+
+- [qBittorrent official download page](https://www.qbittorrent.org/download)
+- [qBittorrent wiki, installing qBittorrent](https://github.com/qbittorrent/qBittorrent/wiki/Installing-qBittorrent)
+- [qBittorrent wiki, running without X server](https://github.com/qbittorrent/qBittorrent/wiki/Running-qBittorrent-without-X-server-%28WebUI-only%2C-systemd-service-set-up%2C-Ubuntu-15.04-or-newer%29)
+- [Debian `qbittorrent-nox` package](https://packages.debian.org/bookworm/qbittorrent-nox)
+- [Ubuntu `qbittorrent-nox` package](https://packages.ubuntu.com/noble/qbittorrent-nox)
+- [qBittorrent wiki, NGINX reverse proxy](https://github.com/qbittorrent/qBittorrent/wiki/NGINX-Reverse-Proxy-for-Web-UI)

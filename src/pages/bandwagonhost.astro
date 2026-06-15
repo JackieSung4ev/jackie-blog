@@ -36,7 +36,7 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
+    <div class="site-container py-10 lg:py-14">
       <header
         class="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
       >
@@ -179,7 +179,7 @@ const metadata = {
                   </div>
                 </div>
 
-                <div class="mt-5 grid gap-4 xl:grid-cols-2">
+                <div class="mt-5 grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
                   {tier.products.map((product) => {
                     const topLocations = product.locations.slice(0, 3);
                     const extraLocationCount = Math.max(product.locations.length - topLocations.length, 0);

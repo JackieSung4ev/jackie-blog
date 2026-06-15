@@ -1,6 +1,6 @@
 ---
 publishDate: 2026-06-14T00:00:00Z
-author: 'JackieSung'
+author: 'Jackie Sung'
 title: 'Codex as a Coding Partner, Not a Magic Button'
 excerpt: 'A practical way to use Codex for focused implementation work without handing it a vague pile of wishes.'
 image: https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1400&q=80
@@ -34,4 +34,4 @@ best changes feel like they were already part of the project. The worst changes 
 ## Ask for proof
 
 The final answer should not only say what changed. It should say how it was checked: build command, preview URL, status
-code, screenshots, or the specific test that passed. That small habit turns AI coding from a demo into a workflow.
+code, screenshots, or the specific test that passed. That small habit turns vibe coding from a demo into a workflow.
