@@ -1,6 +1,6 @@
 site:
-  name: JackieSung
-  site: 'https://example.com'
+  name: Jackie Sung
+  site: 'https://blog.jackiesung.com'
   base: '/'
   trailingSlash: false
 
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: JackieSung
-    template: '%s | JackieSung'
+    default: Jackie Sung
+    template: '%s | Jackie Sung'
   description: 'English notes on VPS deals, cloud servers, AI coding tools, and practical vibe coding workflows.'
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: JackieSung
+    site_name: Jackie Sung
     images:
       - url: '~/assets/images/default.png'
         width: 1200

@@ -21,4 +21,4 @@ practices, pricing, and availability.
 
 ## Contact
 
-For questions about these terms, email [hello@example.com](mailto:hello@example.com).
+For questions about these terms, email [hello@jackiesung.com](mailto:hello@jackiesung.com).

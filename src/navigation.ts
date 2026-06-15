@@ -1,5 +1,7 @@
 import { getPermalink, getBlogPermalink, getAsset } from './utils/permalinks';
 
+const currentYear = new Date().getFullYear();
+
 export const headerData = {
   links: [
     {
@@ -39,6 +41,7 @@ export const footerData = {
         { text: 'Home', href: getPermalink('/') },
         { text: 'Blog', href: getBlogPermalink() },
         { text: 'Search', href: getPermalink('/search') },
+        { text: 'Donate', href: getPermalink('/donate') },
         { text: 'BandwagonHost', href: getPermalink('/bandwagonhost') },
         { text: 'ION Krypt Cloud', href: getPermalink('/ion-krypt-cloud') },
       ],
@@ -59,15 +62,18 @@ export const footerData = {
         { text: 'Contact', href: getPermalink('/contact') },
       ],
     },
+    {
+      title: 'Legal',
+      links: [
+        { text: 'Terms', href: getPermalink('/terms') },
+        { text: 'Privacy Policy', href: getPermalink('/privacy') },
+        { text: 'Cookie', href: getPermalink('/cookie') },
+      ],
+    },
   ],
-  secondaryLinks: [
-    { text: 'Terms', href: getPermalink('/terms') },
-    { text: 'Privacy Policy', href: getPermalink('/privacy') },
-  ],
-  socialLinks: [
-    { ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') },
-  ],
+  secondaryLinks: [],
+  socialLinks: [{ ariaLabel: 'RSS', icon: 'tabler:rss', href: getAsset('/rss.xml') }],
   footNote: `
-    (c) 2026 JackieSung. Built with Astro.
+    Copyright &copy; 2017 - <span data-current-year>${currentYear}</span> Jackie Sung. All rights reserved.
   `,
 };

@@ -14,7 +14,7 @@ collect basic server logs such as IP address, browser type, requested URL, and t
 
 ## Email
 
-If you email [hello@example.com](mailto:hello@example.com), your message and email address will be used only to reply.
+If you email [hello@jackiesung.com](mailto:hello@jackiesung.com), your message and email address will be used only to reply.
 
 ## Changes
 

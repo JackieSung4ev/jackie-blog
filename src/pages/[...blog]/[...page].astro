@@ -21,7 +21,7 @@ const currentPage = page.currentPage ?? 1;
 
 const metadata = {
   title: `Blog${currentPage > 1 ? ` - Page ${currentPage}` : ''}`,
-  description: 'English notes on VPS providers, AI coding tools, and practical vibe coding workflows.',
+  description: 'Practical notes on VPS comparisons, vibe coding, and keeping a small static site useful.',
   robots: {
     index: blogListRobots?.index && currentPage === 1,
     follow: blogListRobots?.follow,
@@ -34,7 +34,7 @@ const metadata = {
 
 <Layout metadata={metadata}>
   <section class="px-6 sm:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline subtitle="English notes on VPS providers, AI coding tools, and practical vibe coding workflows.">
+    <Headline subtitle="Practical notes on VPS comparisons, vibe coding, and keeping a small static site useful.">
       Blog
     </Headline>
     <BlogList posts={page.data} />

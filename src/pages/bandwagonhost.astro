@@ -1,7 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
 import Layout from '~/layouts/PageLayout.astro';
-import { affiliateUrl, getProductTiers, productCount } from '~/utils/bwh-products';
+import { getProductTiers, productCount } from '~/utils/bwh-products';
 
 const tiers = getProductTiers();
 const products = tiers.flatMap((tier) => tier.products);
@@ -22,6 +22,11 @@ const tierAccents: Record<string, string> = {
   ultra: 'from-violet-700 to-[#C3073F]',
 };
 
+const compactTierDescription = (description: string) => {
+  const firstSentence = description.match(/.*?[.!?](?:\s|$)/)?.[0]?.trim() ?? description;
+  return firstSentence.length > 180 ? `${firstSentence.slice(0, 177).trim()}...` : firstSentence;
+};
+
 const metadata = {
   title: 'BandwagonHost VPS Plans',
   description:
@@ -32,7 +37,9 @@ const metadata = {
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
-      <header class="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <header
+        class="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
+      >
         <div class="grid lg:grid-cols-[1.25fr_0.75fr]">
           <div class="p-6 sm:p-8 lg:p-10">
             <p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
@@ -74,24 +81,26 @@ const metadata = {
             </dl>
 
             <div class="mt-7 flex flex-wrap gap-3">
-              <a class="btn-primary rounded-md px-5 py-3 text-sm" href={affiliateUrl()} target="_blank" rel="noopener noreferrer">
-                Buy Now
-              </a>
-              <a class="btn-secondary rounded-md px-5 py-3 text-sm" href="#plans">
-                Compare Plans
-              </a>
+              <a class="btn-secondary rounded-md px-5 py-3 text-sm" href="#plans"> Compare Plans </a>
             </div>
           </div>
 
-          <div class="relative min-h-64 bg-rose-50 p-6 text-slate-950 dark:bg-rose-950/30 dark:text-white lg:min-h-full">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.18),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,241,245,0.88))] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.32),transparent_36%),linear-gradient(135deg,rgba(76,5,32,0.65),rgba(15,23,42,0.72))]"></div>
+          <div
+            class="relative min-h-64 bg-rose-50 p-6 text-slate-950 dark:bg-rose-950/30 dark:text-white lg:min-h-full"
+          >
+            <div
+              class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.18),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.92),rgba(255,241,245,0.88))] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(195,7,63,0.32),transparent_36%),linear-gradient(135deg,rgba(76,5,32,0.65),rgba(15,23,42,0.72))]"
+            >
+            </div>
             <div class="relative flex h-full flex-col justify-end">
-              <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary dark:text-rose-100">Affiliate domain</p>
-              <p class="mt-3 break-all rounded-md border border-rose-200 bg-white/80 p-4 font-mono text-sm text-slate-800 dark:border-rose-900/50 dark:bg-slate-950/40 dark:text-rose-50">
-                bandwagonhost.com/aff.php?aff=13725
+              <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary dark:text-rose-100">
+                Quick scan
               </p>
-              <p class="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-200">
-                All order links on this page use the BandwagonHost affiliate URL with the product ID appended.
+              <p
+                class="mt-3 rounded-md border border-rose-200 bg-white/80 p-4 text-sm leading-6 text-slate-800 dark:border-rose-900/50 dark:bg-slate-950/40 dark:text-rose-50"
+              >
+                Start with location, transfer, CPU, RAM, storage, and billing cycle. The plan cards below keep the specs
+                compact so the comparison stays readable.
               </p>
             </div>
           </div>
@@ -100,12 +109,16 @@ const metadata = {
 
       <div id="plans" class="mt-8 lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
         <aside class="lg:sticky lg:top-24 lg:self-start">
-          <div class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div
+            class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          >
             <div class="flex items-center justify-between gap-3">
               <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                 Plan Tiers
               </h2>
-              <span class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+              <span
+                class="rounded-md bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-200"
+              >
                 {productCount}
               </span>
             </div>
@@ -156,9 +169,12 @@ const metadata = {
                         </div>
                       </div>
 
-                      <p class="max-w-xl rounded-md border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-muted dark:border-slate-800 dark:bg-slate-950/40">
-                        {tier.desc}
-                      </p>
+                      <details class="max-w-xl rounded-md border border-slate-200 bg-slate-50 p-3 text-sm leading-6 text-muted dark:border-slate-800 dark:bg-slate-950/40">
+                        <summary class="cursor-pointer font-semibold text-slate-700 dark:text-slate-200">
+                          Tier notes
+                        </summary>
+                        <p class="mt-2">{compactTierDescription(tier.desc)}</p>
+                      </details>
                     </div>
                   </div>
                 </div>
@@ -194,7 +210,9 @@ const metadata = {
 
                           {primaryPrice && (
                             <div class="shrink-0 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-right text-primary dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-100">
-                              <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">From</p>
+                              <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">
+                                From
+                              </p>
                               <p class="mt-0.5 text-sm font-bold text-slate-950 dark:text-white">{primaryPrice}</p>
                             </div>
                           )}
@@ -252,7 +270,9 @@ const metadata = {
                             Billing cycles and port speed
                           </summary>
                           <div class="mt-3 flex flex-wrap gap-2 text-xs text-muted">
-                            <span class="rounded-md bg-slate-100 px-2.5 py-1 dark:bg-slate-800">Port {product.port}</span>
+                            <span class="rounded-md bg-slate-100 px-2.5 py-1 dark:bg-slate-800">
+                              Port {product.port}
+                            </span>
                             {product.prices.map((price) => (
                               <span class="rounded-md bg-slate-100 px-2.5 py-1 dark:bg-slate-800">{price}</span>
                             ))}

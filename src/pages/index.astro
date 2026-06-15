@@ -2,125 +2,30 @@
 import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
-import Features from '~/components/widgets/Features.astro';
-import Features2 from '~/components/widgets/Features2.astro';
-import Content from '~/components/widgets/Content.astro';
-import BlogLatestPosts from '~/components/widgets/BlogLatestPosts.astro';
+import SearchBox from '~/components/SearchBox.astro';
 
 const metadata = {
-  title: 'JackieSung - VPS Deals and AI Coding Notes',
+  title: 'Jackie Sung - Full-Stack Developer, Designer, and Indie App Builder',
   ignoreTitleTemplate: true,
   description:
-    'English notes on VPS providers, BandwagonHost, ION Krypt Cloud, AI coding tools, Codex, Claude Code, and vibe coding workflows.',
+    'Jackie Sung is a full-stack developer, visual designer, indie app builder, vibe coding enthusiast, and cross-border e-commerce operator.',
 };
 ---
 
 <Layout metadata={metadata}>
-  <Hero
-    actions={[
-      { variant: 'primary', text: 'Compare VPS plans', href: '/bandwagonhost', icon: 'tabler:server-2' },
-      { text: 'Read the blog', href: '/blog' },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=80',
-      alt: 'Rows of server racks in a data center.',
-    }}
-  >
-    <Fragment slot="title">JackieSung</Fragment>
+  <Hero>
+    <Fragment slot="title">Jackie Sung</Fragment>
 
     <Fragment slot="subtitle">
-      English notes for comparing VPS deals, keeping affiliate links organized, and writing about the AI coding tools
-      that are changing everyday software work.
+      Full-stack developer, visual designer, indie app builder, vibe-coding enthusiast, and cross-border e-commerce
+      operator with 10+ years in the arena. I build practical tools, chase clean interfaces, and keep notes from the
+      lively overlap of code, design, apps, and business.
+    </Fragment>
+
+    <Fragment slot="content">
+      <div class="mx-auto mt-8 max-w-2xl text-left">
+        <SearchBox id="home-search" placeholder="Search notes, server pages, and projects..." large />
+      </div>
     </Fragment>
   </Hero>
-
-  <Features
-    id="start"
-    tagline="Start here"
-    title="Two practical tracks"
-    subtitle="The site is split between cloud server deal pages and concise writing about AI-assisted development."
-    columns={3}
-    items={[
-      {
-        title: 'BandwagonHost catalog',
-        description: 'A structured VPS catalog grouped by product tier, specs, price, bandwidth, and data center options.',
-        icon: 'tabler:server-2',
-      },
-      {
-        title: 'ION Krypt Cloud plans',
-        description: 'A clean English summary of ION VPS Cloud plans across USA and Singapore locations.',
-        icon: 'tabler:cloud-computing',
-      },
-      {
-        title: 'AI coding notes',
-        description: 'Short essays on Codex, Claude Code, GPT, and the habits that make vibe coding useful instead of messy.',
-        icon: 'tabler:sparkles',
-      },
-    ]}
-  />
-
-  <Content
-    id="server"
-    isReversed
-    items={[
-      {
-        title: 'Compare by location',
-        description: 'Server pages make it easier to scan USA, Asia, and China-optimized routes without digging through order forms.',
-      },
-      {
-        title: 'Keep purchase links consistent',
-        description: 'Outbound plan links use the configured affiliate URLs so the site stays simple and monetizable.',
-      },
-      {
-        title: 'Write the operating notes',
-        description: 'The blog explains the tools and workflows behind the site instead of turning every page into marketing copy.',
-      },
-    ]}
-    image={{
-      src: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1400&q=80',
-      alt: 'A laptop showing a technical writing workflow.',
-    }}
-  >
-    <Fragment slot="content">
-      <h2 class="mb-3 text-2xl font-bold tracking-normal dark:text-white sm:text-3xl">
-        A small site for useful comparisons
-      </h2>
-      <p>
-        JackieSung is built to keep VPS plan information readable and to publish direct, practical notes about AI
-        coding. The design stays lightweight so the content, prices, specs, and links remain easy to update.
-      </p>
-    </Fragment>
-
-    <Fragment slot="bg">
-      <div class="absolute inset-0 bg-rose-50/70 dark:bg-transparent"></div>
-    </Fragment>
-  </Content>
-
-  <BlogLatestPosts
-    id="writing"
-    title="Latest writing"
-    linkText="Browse the blog"
-    count={3}
-    information="Three starter posts are included for AI coding, Codex, Claude Code, and practical GPT workflows."
-  />
-
-  <Features2
-    title="Server quick links"
-    subtitle="Jump straight into the two provider pages currently tracked on this site."
-    columns={2}
-    items={[
-      {
-        title: 'BandwagonHost',
-        description: 'Browse BandwagonHost VPS plans by tier and order through affiliate links.',
-        icon: 'tabler:server',
-        callToAction: { text: 'Open catalog', href: '/bandwagonhost' },
-      },
-      {
-        title: 'ION Krypt Cloud',
-        description: 'Review ION VPS Cloud monthly plans for Dallas, Honolulu, Los Angeles, Silicon Valley, and Singapore.',
-        icon: 'tabler:cloud',
-        callToAction: { text: 'Open ION plans', href: '/ion-krypt-cloud' },
-      },
-    ]}
-  />
 </Layout>

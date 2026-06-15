@@ -13,7 +13,6 @@ type IonPlan = {
   price: string;
 };
 
-const ionAffiliate = 'https://ion.krypt.asia/aff.php?aff=640';
 const checkedDate = 'June 14, 2026';
 
 const plans: IonPlan[] = [
@@ -279,12 +278,14 @@ const metadata = {
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:py-14">
-      <header class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8 lg:p-10">
+      <header
+        class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8 lg:p-10"
+      >
         <p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-primary">
           <Icon name="tabler:cloud-computing" class="h-4 w-4" />
           ION Krypt Cloud
         </p>
-        <div class="mt-4 grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
+        <div class="mt-4">
           <div>
             <h1 class="text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">
               ION Krypt Cloud VPS Plans
@@ -294,14 +295,6 @@ const metadata = {
               Singapore. The official page lists some same-spec Dallas and Honolulu rows at different monthly prices, so
               this page keeps those published variants separate instead of guessing an operating-system label.
             </p>
-          </div>
-
-          <div class="rounded-md border border-rose-200 bg-rose-50 p-5 text-slate-950 dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-white">
-            <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary dark:text-rose-100">Affiliate order link</p>
-            <p class="mt-3 break-all font-mono text-sm text-slate-800 dark:text-rose-50">ion.krypt.asia/aff.php?aff=640</p>
-            <a class="btn-primary mt-5 min-h-11 rounded-md px-4 py-2 text-sm" href={ionAffiliate} target="_blank" rel="noopener noreferrer">
-              Buy Now
-            </a>
           </div>
         </div>
 
@@ -339,10 +332,10 @@ const metadata = {
 
       <div class="mt-8 grid gap-8 lg:grid-cols-[280px_1fr]">
         <aside class="lg:sticky lg:top-24 lg:self-start">
-          <div class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-            <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-              Locations
-            </h2>
+          <div
+            class="rounded-md border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          >
+            <h2 class="text-sm font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">Locations</h2>
             <nav class="mt-4 grid gap-2" aria-label="ION locations">
               {
                 groupedPlans.map(({ location, plans }) => (
@@ -389,10 +382,11 @@ const metadata = {
                             {plan.location}
                           </p>
                           <h3 class="mt-3 text-xl font-bold text-slate-950 dark:text-white">{plan.name}</h3>
-                          <p class="mt-2 text-sm leading-6 text-muted">{plan.network}</p>
                         </div>
                         <div class="shrink-0 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-right text-primary dark:border-rose-900/50 dark:bg-rose-950/30 dark:text-rose-100">
-                          <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">Monthly</p>
+                          <p class="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-rose-200">
+                            Monthly
+                          </p>
                           <p class="mt-0.5 text-sm font-bold text-slate-950 dark:text-white">{plan.price}</p>
                         </div>
                       </div>
@@ -414,17 +408,14 @@ const metadata = {
                         ))}
                       </dl>
 
-                      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
-                        <span class="text-sm text-muted">Linux and Windows VPS options are available on ION's order flow.</span>
-                        <a
-                          class="btn-primary min-h-11 rounded-md px-4 py-2 text-sm"
-                          href={ionAffiliate}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Buy Now
-                        </a>
-                      </div>
+                      <details class="mt-5 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm dark:border-slate-800 dark:bg-slate-900">
+                        <summary class="cursor-pointer font-semibold text-slate-700 dark:text-slate-200">
+                          Network note
+                        </summary>
+                        <p class="mt-2 leading-6 text-muted">
+                          {plan.network}. Linux and Windows options are handled in ION's order flow.
+                        </p>
+                      </details>
                     </article>
                   ))}
                 </div>
