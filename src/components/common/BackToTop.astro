@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 <button
   type="button"
-  class="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 inline-flex h-12 w-12 translate-y-3 cursor-pointer items-center justify-center rounded-full border border-primary bg-primary text-white opacity-0 shadow-lg shadow-rose-950/20 backdrop-blur transition-[opacity,transform,background-color,color,border-color,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-secondary hover:bg-secondary hover:shadow-xl hover:shadow-rose-950/25 focus:outline-none focus:ring-4 focus:ring-rose-100 dark:border-primary dark:bg-primary dark:text-white dark:shadow-black/30 dark:hover:border-secondary dark:hover:bg-secondary dark:focus:ring-rose-950/40 sm:right-6 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]"
+  class="fixed right-4 bottom-[calc(1rem+env(safe-area-inset-bottom))] z-50 inline-flex h-12 w-12 translate-y-3 cursor-pointer items-center justify-center rounded-full border border-primary bg-primary text-white opacity-0 shadow-lg shadow-rose-950/20 backdrop-blur transition-[opacity,transform,background-color,color,border-color,box-shadow] duration-300 ease-linear hover:border-secondary hover:bg-secondary hover:shadow-xl hover:shadow-rose-950/25 focus:outline-none focus:ring-4 focus:ring-rose-100 dark:border-primary dark:bg-primary dark:text-white dark:shadow-black/30 dark:hover:border-secondary dark:hover:bg-secondary dark:focus:ring-rose-950/40 sm:right-6 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom))]"
   aria-label="Back to top"
   aria-hidden="true"
   data-back-to-top
@@ -77,9 +77,8 @@ import { Icon } from 'astro-icon/components';
         }
       }
 
-      function easeOutBezier(progress) {
-        const remaining = 1 - progress;
-        return 1 - remaining * remaining * remaining;
+      function smoothProgress(progress) {
+        return 0.5 - Math.cos(progress * Math.PI) / 2;
       }
 
       function scrollToTop() {
@@ -96,7 +95,7 @@ import { Icon } from 'astro-icon/components';
 
         function step(now) {
           const progress = Math.min((now - startedAt) / duration, 1);
-          const eased = easeOutBezier(progress);
+          const eased = smoothProgress(progress);
           window.scrollTo(0, Math.round(startY * (1 - eased)));
 
           if (progress < 1) {

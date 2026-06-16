@@ -27,16 +27,35 @@ const metadata = {
   title: 'Contact',
   description: 'Contact Jackie Sung by email.',
 };
+
+const topicOptions = ['A note or correction', 'VPS or provider field note', 'Tool or app idea', 'Vibe-coding workflow'];
+
+const contactNotes = [
+  {
+    label: 'Best topics',
+    value: 'Link fixes, provider notes, app ideas, and workflow questions.',
+  },
+  {
+    label: 'Good format',
+    value: 'Short context, the page or link, and the part that changed or felt off.',
+  },
+];
+
+const labelClass = 'block text-sm font-semibold text-slate-800 dark:text-slate-100';
+const inputClass =
+  'mt-2 block h-11 w-full rounded-md border border-slate-200 bg-white px-3 text-base text-slate-950 outline-none transition placeholder:text-slate-500 focus:border-primary focus:ring-4 focus:ring-rose-100 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:focus:ring-rose-950/40';
+const textareaClass =
+  'mt-2 block min-h-40 w-full rounded-md border border-slate-200 bg-white px-3 py-3 text-base text-slate-950 outline-none transition placeholder:text-slate-500 focus:border-primary focus:ring-4 focus:ring-rose-100 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:focus:ring-rose-950/40';
 ---
 
 <Layout metadata={metadata}>
   <section class="bg-slate-50/80 dark:bg-slate-950">
-    <div class="site-container py-12 lg:py-20">
-      <div class="mx-auto max-w-5xl">
-        <div
-          class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8 lg:p-10"
+    <div class="site-container py-12 lg:py-16">
+      <div class="grid gap-6 lg:grid-cols-[minmax(280px,0.82fr)_minmax(0,1.18fr)] xl:gap-8">
+        <aside
+          class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
         >
-          <div class="grid gap-6 sm:grid-cols-[7rem_minmax(0,1fr)] sm:items-center lg:gap-8">
+          <div class="flex items-center gap-4">
             <img
               src={avatar}
               alt="Jackie Sung avatar"
@@ -55,41 +74,147 @@ const metadata = {
               <h1 class="mt-3 text-3xl font-bold leading-tight text-slate-950 dark:text-white md:text-5xl">
                 Jackie Sung
               </h1>
-              <p class="mt-4 max-w-3xl text-base leading-7 text-muted md:text-lg">Email me directly.</p>
-
-              <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <a
-                  class="btn-primary inline-flex min-h-11 items-center gap-2 rounded-md px-5 py-3 text-sm"
-                  href={`mailto:${email}`}
-                >
-                  <Icon name="tabler:mail-forward" class="h-5 w-5" />
-                  {email}
-                </a>
-                <p class="text-sm leading-6 text-muted">Brief, specific notes are especially welcome.</p>
-              </div>
             </div>
           </div>
-        </div>
 
-        <section class="mt-8 lg:mt-10">
-          <div class="mb-4">
-            <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Good excuses to email</p>
-            <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">Send the interesting part</h2>
-          </div>
+          <p class="mt-6 text-base leading-7 text-muted md:text-lg">
+            Email me directly, or use the brief form to open a drafted message.
+          </p>
 
-          <div class="grid gap-4 md:grid-cols-3">
+          <a
+            class="btn-primary mt-6 inline-flex min-h-11 items-center gap-2 rounded-md px-5 py-3 text-sm"
+            href={`mailto:${email}`}
+          >
+            <Icon name="tabler:mail-forward" class="h-5 w-5" />
+            {email}
+          </a>
+
+          <dl class="mt-6 grid gap-3 text-sm">
             {
-              reasons.map(({ title, description, icon }) => (
-                <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                  <Icon name={icon} class="h-6 w-6 text-primary" />
-                  <h3 class="mt-4 text-lg font-bold text-slate-950 dark:text-white">{title}</h3>
-                  <p class="mt-2 text-sm leading-6 text-muted">{description}</p>
-                </article>
+              contactNotes.map(({ label, value }) => (
+                <div class="rounded-md bg-slate-50 p-4 dark:bg-slate-800/70">
+                  <dt class="font-semibold text-slate-950 dark:text-white">{label}</dt>
+                  <dd class="mt-1 leading-6 text-muted">{value}</dd>
+                </div>
               ))
             }
-          </div>
+          </dl>
+        </aside>
+
+        <section
+          class="rounded-md border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8"
+        >
+          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Quick email</p>
+          <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white md:text-3xl">Send the useful part</h2>
+          <p class="mt-3 max-w-2xl text-sm leading-6 text-muted">
+            A specific page, route, price, error message, or app idea is enough to start.
+          </p>
+
+          <form class="mt-6 grid gap-4" data-contact-mailto>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label class={labelClass} for="contact-name">Name</label>
+                <input id="contact-name" class={inputClass} name="name" type="text" autocomplete="name" />
+              </div>
+
+              <div>
+                <label class={labelClass} for="contact-reply">Reply email</label>
+                <input id="contact-reply" class={inputClass} name="reply" type="email" autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-[0.9fr_1.1fr]">
+              <div>
+                <label class={labelClass} for="contact-topic">Topic</label>
+                <select id="contact-topic" class={inputClass} name="topic">
+                  {topicOptions.map((topic) => <option value={topic}>{topic}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label class={labelClass} for="contact-subject">Subject</label>
+                <input
+                  id="contact-subject"
+                  class={inputClass}
+                  name="subject"
+                  type="text"
+                  placeholder="What should I look at?"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class={labelClass} for="contact-message">Message</label>
+              <textarea
+                id="contact-message"
+                class={textareaClass}
+                name="message"
+                placeholder="Send the context, link, or sharp bit."
+                required></textarea>
+            </div>
+
+            <div
+              class="flex flex-col gap-3 border-t border-slate-200 pt-4 dark:border-slate-800 sm:flex-row sm:items-center sm:justify-between"
+            >
+              <p class="text-sm leading-6 text-muted">This opens your email client with a draft.</p>
+              <button
+                class="btn-primary inline-flex min-h-11 items-center gap-2 rounded-md px-5 py-3 text-sm"
+                type="submit"
+              >
+                <Icon name="tabler:send" class="h-5 w-5" />
+                Open email draft
+              </button>
+            </div>
+          </form>
         </section>
       </div>
+
+      <section class="mt-6 lg:mt-8">
+        <div class="mb-4">
+          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-primary">Good excuses to email</p>
+          <h2 class="mt-2 text-2xl font-bold text-slate-950 dark:text-white">Use the interesting part</h2>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-3">
+          {
+            reasons.map(({ title, description, icon }) => (
+              <article class="rounded-md border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <Icon name={icon} class="h-6 w-6 text-primary" />
+                <h3 class="mt-4 text-lg font-bold text-slate-950 dark:text-white">{title}</h3>
+                <p class="mt-2 text-sm leading-6 text-muted">{description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </section>
     </div>
   </section>
+
+  <script is:inline define:vars={{ email }}>
+    (() => {
+      const form = document.querySelector('[data-contact-mailto]');
+      if (!(form instanceof HTMLFormElement) || form.dataset.ready === 'true') return;
+      form.dataset.ready = 'true';
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const data = new FormData(form);
+        const getValue = (name) => String(data.get(name) || '').trim();
+        const topic = getValue('topic');
+        const subject = getValue('subject') || topic || 'Contact Jackie Sung';
+        const body = [
+          getValue('message'),
+          '',
+          getValue('name') ? `Name: ${getValue('name')}` : '',
+          getValue('reply') ? `Reply email: ${getValue('reply')}` : '',
+          topic ? `Topic: ${topic}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n');
+
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+    })();
+  </script>
 </Layout>
