@@ -179,7 +179,7 @@ const metadata = {
                   </div>
                 </div>
 
-                <div class="mt-5 grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
+                <div class="mt-5 grid gap-4 min-[1536px]:grid-cols-2 min-[1800px]:grid-cols-3">
                   {tier.products.map((product) => {
                     const topLocations = product.locations.slice(0, 3);
                     const extraLocationCount = Math.max(product.locations.length - topLocations.length, 0);

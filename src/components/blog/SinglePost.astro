@@ -101,8 +101,8 @@ const articleJsonLd = {
           <Image
             src={post.image}
             class={`${articleFrameClass} mb-6 w-full bg-gray-400 dark:bg-slate-700 sm:rounded-md`}
-            widths={[400, 768, 1104, 1208, 1552, 1792]}
-            sizes="(max-width: 639px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), (max-width: 1279px) calc(100vw - 6rem), (max-width: 1535px) 1104px, (max-width: 1799px) 1208px, (max-width: 2199px) 1552px, 1792px"
+            widths={[400, 768, 1024, 1128, 1552, 1792]}
+            sizes="(max-width: 639px) calc(100vw - 2.5rem), (max-width: 1023px) calc(100vw - 4rem), (max-width: 1279px) calc(100vw - 6rem), (max-width: 1535px) 1024px, (max-width: 1799px) 1128px, (max-width: 2199px) 1552px, 1792px"
             alt={post?.excerpt || ''}
             width={1600}
             height={901}
@@ -118,7 +118,7 @@ const articleJsonLd = {
       }
     </header>
     <div
-      class={`${articleFrameClass} mt-8 grid gap-10 xl:grid-cols-[minmax(0,960px)_16rem] xl:items-start 2xl:grid-cols-[minmax(0,1040px)_18rem]`}
+      class={`${articleFrameClass} mt-8 grid gap-10 xl:grid-cols-[minmax(0,1fr)_14rem] xl:items-start 2xl:grid-cols-[minmax(0,1fr)_16rem]`}
     >
       <div
         data-code-copy-scope
