@@ -55,9 +55,7 @@ import { Icon } from 'astro-icon/components';
       }
 
       const threshold = 420;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
       let ticking = false;
-      let scrollAnimation = 0;
 
       function setVisible(isVisible) {
         button.dataset.visible = isVisible ? 'true' : 'false';
@@ -77,33 +75,8 @@ import { Icon } from 'astro-icon/components';
         }
       }
 
-      function smoothProgress(progress) {
-        return 0.5 - Math.cos(progress * Math.PI) / 2;
-      }
-
       function scrollToTop() {
-        window.cancelAnimationFrame(scrollAnimation);
-
-        if (reducedMotion.matches) {
-          window.scrollTo(0, 0);
-          return;
-        }
-
-        const startY = window.scrollY;
-        const duration = Math.min(760, Math.max(420, startY * 0.35));
-        const startedAt = window.performance.now();
-
-        function step(now) {
-          const progress = Math.min((now - startedAt) / duration, 1);
-          const eased = smoothProgress(progress);
-          window.scrollTo(0, Math.round(startY * (1 - eased)));
-
-          if (progress < 1) {
-            scrollAnimation = window.requestAnimationFrame(step);
-          }
-        }
-
-        scrollAnimation = window.requestAnimationFrame(step);
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
       }
 
       document.addEventListener('scroll', onScroll, { passive: true });
@@ -113,7 +86,6 @@ import { Icon } from 'astro-icon/components';
       window.__backToTopCleanup = function () {
         document.removeEventListener('scroll', onScroll);
         button.removeEventListener('click', scrollToTop);
-        window.cancelAnimationFrame(scrollAnimation);
       };
     }
 
