@@ -21,7 +21,7 @@ const { post, url } = Astro.props;
 const origin = new URL(SITE.site).origin;
 const imageSrc = typeof post.image === 'string' ? post.image : post.image?.src;
 const imageUrl = imageSrc && !imageSrc.startsWith('~') ? new URL(imageSrc, origin).toString() : undefined;
-const articleFrameClass = 'mx-auto w-full';
+const articleFrameClass = 'w-full';
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -54,7 +54,7 @@ const articleJsonLd = {
   <article>
     <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} is:inline />
     <header class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-      <div class="mx-auto mb-2 mt-0 flex max-w-4xl flex-col justify-between sm:flex-row sm:items-center">
+      <div class="site-readable mb-2 mt-0 flex flex-col justify-between sm:flex-row sm:items-center">
         <p>
           <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
           <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
@@ -89,10 +89,10 @@ const articleJsonLd = {
         </p>
       </div>
 
-      <h1 class="mx-auto max-w-4xl text-4xl font-bold leading-tighter tracking-normal font-heading md:text-5xl">
+      <h1 class="site-readable text-4xl font-bold leading-tighter tracking-normal font-heading md:text-5xl">
         {post.title}
       </h1>
-      <p class="mx-auto mb-8 mt-4 max-w-4xl text-xl text-muted dark:text-slate-400 md:text-2xl">
+      <p class="site-readable mb-8 mt-4 text-xl text-muted dark:text-slate-400 md:text-2xl">
         {post.excerpt}
       </p>
 
@@ -101,8 +101,8 @@ const articleJsonLd = {
           <Image
             src={post.image}
             class={`${articleFrameClass} mb-6 w-full bg-gray-400 dark:bg-slate-700 sm:rounded-md`}
-            widths={[400, 768, 1024, 1376, 1600, 1824]}
-            sizes="(max-width: 639px) calc(100vw - 2rem), (max-width: 1023px) calc(100vw - 2.5rem), (max-width: 1279px) calc(100vw - 3.5rem), (max-width: 1535px) 1376px, (max-width: 1799px) 1600px, 1824px"
+            widths={[400, 768, 1024, 1216, 1424, 1680, 1792, 1920]}
+            sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 40px), (max-width: 1279px) calc(100vw - 64px), (max-width: 1535px) calc(100vw - 88px), (max-width: 1799px) calc(100vw - 112px), (max-width: 2047px) calc(100vw - 128px), 1920px"
             alt={post?.excerpt || ''}
             width={1600}
             height={901}

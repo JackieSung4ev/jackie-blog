@@ -54,60 +54,54 @@
 }
 
 :root {
-  --site-container-max: 100%;
-  --site-container-gutter: 1rem;
+  --site-container-max: 1920px;
+  --site-container-gutter: 16px;
+  --site-readable-max: 896px;
+  --site-copy-max: 896px;
 }
 
 @media (min-width: 640px) {
   :root {
-    --site-container-gutter: 1.25rem;
+    --site-container-gutter: 20px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --site-container-gutter: 1.75rem;
+    --site-container-gutter: 32px;
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    --site-container-max: 1440px;
+    --site-container-gutter: 44px;
   }
 }
 
 @media (min-width: 1536px) {
   :root {
-    --site-container-max: 1680px;
-    --site-container-gutter: 2.5rem;
+    --site-container-gutter: 56px;
   }
 }
 
 @media (min-width: 1800px) {
   :root {
-    --site-container-max: 1920px;
-    --site-container-gutter: 3rem;
-  }
-}
-
-@media (min-width: 2200px) {
-  :root {
-    --site-container-max: 1920px;
+    --site-container-gutter: 64px;
   }
 }
 
 @utility site-container {
-  width: 100%;
+  width: min(calc(100% - (var(--site-container-gutter) * 2)), var(--site-container-max));
   max-width: var(--site-container-max) !important;
   margin-inline: auto;
-  padding-inline: var(--site-container-gutter) !important;
+  padding-inline: 0 !important;
 }
 
 @utility article-container {
-  width: 100%;
+  width: min(calc(100% - (var(--site-container-gutter) * 2)), var(--site-container-max));
   max-width: var(--site-container-max) !important;
   margin-inline: auto;
-  padding-inline: var(--site-container-gutter) !important;
+  padding-inline: 0 !important;
 }
 
 @utility site-hero-frame {
@@ -118,8 +112,13 @@
 
 @utility site-copy-frame {
   width: 100%;
-  max-width: 56rem;
+  max-width: var(--site-copy-max);
   margin-inline: auto;
+}
+
+@utility site-readable {
+  width: 100%;
+  max-width: var(--site-readable-max);
 }
 @utility btn {
   @apply inline-flex items-center justify-center rounded-full border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;
@@ -150,10 +149,10 @@
 #header.expanded nav {
   position: fixed;
   top: 70px;
-  left: 0;
-  right: 0;
+  left: var(--site-container-gutter);
+  right: var(--site-container-gutter);
   bottom: 70px !important;
-  padding: 0 5px;
+  padding: 0;
 }
 
 .dropdown:focus .dropdown-menu,
