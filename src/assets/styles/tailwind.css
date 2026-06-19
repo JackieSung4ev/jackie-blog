@@ -149,10 +149,12 @@
 #header.expanded nav {
   position: fixed;
   top: 70px;
-  left: var(--site-container-gutter);
-  right: var(--site-container-gutter);
+  left: 50%;
+  right: auto;
   bottom: 70px !important;
+  width: min(calc(100% - (var(--site-container-gutter) * 2)), var(--site-container-max));
   padding: 0;
+  transform: translateX(-50%);
 }
 
 .dropdown:focus .dropdown-menu,
