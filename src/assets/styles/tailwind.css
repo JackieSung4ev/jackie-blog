@@ -55,38 +55,38 @@
 
 :root {
   --site-container-max: 100%;
-  --site-container-gutter: 1.25rem;
+  --site-container-gutter: 1rem;
 }
 
 @media (min-width: 640px) {
   :root {
-    --site-container-gutter: 2rem;
+    --site-container-gutter: 1.25rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --site-container-gutter: 3rem;
+    --site-container-gutter: 1.75rem;
   }
 }
 
 @media (min-width: 1280px) {
   :root {
-    --site-container-max: 1120px;
+    --site-container-max: 1440px;
   }
 }
 
 @media (min-width: 1536px) {
   :root {
-    --site-container-max: 1240px;
-    --site-container-gutter: 3.5rem;
+    --site-container-max: 1680px;
+    --site-container-gutter: 2.5rem;
   }
 }
 
 @media (min-width: 1800px) {
   :root {
-    --site-container-max: 1680px;
-    --site-container-gutter: 4rem;
+    --site-container-max: 1920px;
+    --site-container-gutter: 3rem;
   }
 }
 
