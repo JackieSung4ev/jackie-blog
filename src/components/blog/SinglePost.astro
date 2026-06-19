@@ -21,6 +21,7 @@ const { post, url } = Astro.props;
 const origin = new URL(SITE.site).origin;
 const imageSrc = typeof post.image === 'string' ? post.image : post.image?.src;
 const imageUrl = imageSrc && !imageSrc.startsWith('~') ? new URL(imageSrc, origin).toString() : undefined;
+const articleFrameClass = 'mx-auto max-w-[1440px]';
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -99,9 +100,9 @@ const articleJsonLd = {
         post.image ? (
           <Image
             src={post.image}
-            class="mx-auto mb-6 w-full max-w-[1600px] bg-gray-400 dark:bg-slate-700 sm:rounded-md"
+            class={`${articleFrameClass} mb-6 w-full bg-gray-400 dark:bg-slate-700 sm:rounded-md`}
             widths={[400, 900, 1200, 1600]}
-            sizes="(max-width: 900px) 100vw, (max-width: 1700px) calc(100vw - 3rem), 1600px"
+            sizes="(max-width: 900px) 100vw, (max-width: 1536px) calc(100vw - 4rem), 1440px"
             alt={post?.excerpt || ''}
             width={1600}
             height={901}
@@ -110,14 +111,14 @@ const articleJsonLd = {
             decoding="async"
           />
         ) : (
-          <div class="mx-auto max-w-[1600px]">
+          <div class={articleFrameClass}>
             <div class="border-t dark:border-slate-700" />
           </div>
         )
       }
     </header>
     <div
-      class="mx-auto mt-8 grid max-w-[1440px] gap-10 xl:grid-cols-[minmax(0,960px)_16rem] xl:items-start 2xl:grid-cols-[minmax(0,1040px)_18rem]"
+      class={`${articleFrameClass} mt-8 grid gap-10 xl:grid-cols-[minmax(0,960px)_16rem] xl:items-start 2xl:grid-cols-[minmax(0,1040px)_18rem]`}
     >
       <div
         data-code-copy-scope
@@ -127,7 +128,7 @@ const articleJsonLd = {
       </div>
       <TableOfContents headings={post.headings} />
     </div>
-    <div class="mx-auto mt-8 flex max-w-[1440px] flex-col justify-between sm:flex-row">
+    <div class={`${articleFrameClass} mt-8 flex flex-col justify-between sm:flex-row`}>
       <PostTags tags={post.tags} class="mr-5 rtl:mr-0 rtl:ml-5" />
       <SocialShare url={url} text={post.title} class="mt-5 sm:mt-1 align-middle text-gray-500 dark:text-slate-600" />
     </div>
