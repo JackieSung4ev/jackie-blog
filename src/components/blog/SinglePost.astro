@@ -54,7 +54,7 @@ const articleJsonLd = {
   <article>
     <script type="application/ld+json" set:html={JSON.stringify(articleJsonLd)} is:inline />
     <header class="intersect-once intersect-quarter motion-safe:md:opacity-0 motion-safe:md:intersect:animate-fade">
-      <div class="site-readable mb-2 mt-0 flex flex-col justify-between sm:flex-row sm:items-center">
+      <div class="article-readable mb-2 mt-0 flex flex-col justify-between sm:flex-row sm:items-center">
         <p>
           <Icon name="tabler:clock" class="w-4 h-4 inline-block -mt-0.5 dark:text-gray-400" />
           <time datetime={String(post.publishDate)} class="inline-block">{getFormattedDate(post.publishDate)}</time>
@@ -89,10 +89,10 @@ const articleJsonLd = {
         </p>
       </div>
 
-      <h1 class="site-readable text-4xl font-bold leading-tighter tracking-normal font-heading md:text-5xl">
+      <h1 class="article-readable text-4xl font-bold leading-tighter tracking-normal font-heading md:text-5xl">
         {post.title}
       </h1>
-      <p class="site-readable mb-8 mt-4 text-xl text-muted dark:text-slate-400 md:text-2xl">
+      <p class="article-readable mb-8 mt-4 text-xl text-muted dark:text-slate-400 md:text-2xl">
         {post.excerpt}
       </p>
 

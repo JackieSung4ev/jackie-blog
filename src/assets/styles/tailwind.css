@@ -57,6 +57,7 @@
   --site-container-max: 1920px;
   --site-container-gutter: 16px;
   --site-readable-max: 896px;
+  --article-readable-max: var(--site-readable-max);
   --site-copy-max: 896px;
 }
 
@@ -75,18 +76,21 @@
 @media (min-width: 1280px) {
   :root {
     --site-container-gutter: 44px;
+    --article-readable-max: 1120px;
   }
 }
 
 @media (min-width: 1536px) {
   :root {
     --site-container-gutter: 56px;
+    --article-readable-max: 1280px;
   }
 }
 
 @media (min-width: 1800px) {
   :root {
     --site-container-gutter: 64px;
+    --article-readable-max: 1440px;
   }
 }
 
@@ -119,6 +123,11 @@
 @utility site-readable {
   width: 100%;
   max-width: var(--site-readable-max);
+}
+
+@utility article-readable {
+  width: 100%;
+  max-width: var(--article-readable-max);
 }
 @utility btn {
   @apply inline-flex items-center justify-center rounded-full border-gray-400 border bg-transparent font-medium text-center text-base text-page leading-snug transition py-3.5 px-6 md:px-8 ease-in duration-200 focus:ring-blue-500 focus:ring-offset-blue-200 focus:ring-2 focus:ring-offset-2 hover:bg-gray-100 hover:border-gray-600 dark:text-slate-300 dark:border-slate-500 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer;

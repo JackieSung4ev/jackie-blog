@@ -12,8 +12,11 @@ const isVisible = items.length > 1;
 
 {
   isVisible && (
-    <aside class="hidden w-64 self-start xl:block" aria-label="Article navigation">
-      <nav class="sticky top-28 border-l border-slate-200 pl-5 text-sm dark:border-slate-800">
+    <aside
+      class="sticky top-28 hidden max-h-[calc(100dvh-8rem)] w-64 self-start overflow-y-auto xl:block"
+      aria-label="Article navigation"
+    >
+      <nav class="border-l border-slate-200 pl-5 text-sm dark:border-slate-800">
         <p class="font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">On this page</p>
         <ol class="mt-3 space-y-1">
           {items.map((heading) => (
